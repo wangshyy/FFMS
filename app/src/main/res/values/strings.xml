@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">家庭财务管理系统</string>
+    <string name="app_name_debug">家庭财务管理系统（开发）</string>
+</resources>
