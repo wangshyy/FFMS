@@ -1,12 +1,36 @@
 package com.wsy.ffms.db.user
 
-import androidx.room.Dao
+import androidx.room.*
 
 /**
  *  author : wsy
  *  date   : 2023/2/24
- *  desc   :
+ *  desc   : User表操作类
  */
 @Dao
 interface UserDao {
+    //新增用户
+    @Insert
+    fun insert(user: User)
+
+    //删除用户
+    @Delete
+    fun delete(vararg user: User)
+
+    //删除全部用户
+    @Query("DELETE FROM user")
+    fun deleteAllUser()
+
+    //更新用户
+    @Update
+    fun update(vararg user: User)
+
+    //根据用户名查询用户,不区分大小写
+    @Query("SELECT * FROM user WHERE user_name= :userName COLLATE NOCASE")
+    fun getUserByName(userName: String): User?
+
+    //获取所有用户
+    @Query("SELECT * FROM user")
+    fun queryUserAll(): List<User?>?
+
 }

@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.wsy.ffms.MyApplication
+import com.wsy.ffms.db.user.User
 import com.wsy.ffms.db.user.UserDao
 
 /**
@@ -11,7 +12,7 @@ import com.wsy.ffms.db.user.UserDao
  *  date   : 2023/2/24
  *  desc   :
  */
-@Database(entities = [UserDao::class], version = 1, exportSchema = false)
+@Database(entities = [User::class], version = 1, exportSchema = false)
 abstract class AppDataBase : RoomDatabase() {
     companion object {
         private const val DB_NAME = "ffms.db"

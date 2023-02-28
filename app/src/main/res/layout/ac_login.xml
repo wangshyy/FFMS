@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="viewModel"
+            type="com.wsy.ffms.ui.login.LoginViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/login_bg">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_24"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.16" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appCompatTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_86"
+            android:text="@string/family_login"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tv_title"
+            app:layout_constraintStart_toStartOf="@+id/tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_family_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            app:cardCornerRadius="@dimen/dp_18"
+            app:cardElevation="@dimen/dp_0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView"
+            app:layout_constraintWidth_percent=".7">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/aet_family_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_36"
+                android:background="@color/white"
+                android:drawableStart="@drawable/ic_username"
+                android:drawablePadding="@dimen/dp_8"
+                android:gravity="center"
+                android:hint="@string/family_name_hint"
+                android:inputType="text"
+                android:paddingStart="@dimen/dp_12"
+                android:paddingEnd="@dimen/dp_20"
+                android:text="@={viewModel.familyName}"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/text_size_14" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_password_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_16"
+            app:cardCornerRadius="@dimen/dp_18"
+            app:cardElevation="@dimen/dp_0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mcv_family_name"
+            app:layout_constraintWidth_percent=".7">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/aet_password_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_36"
+                android:background="@color/white"
+                android:drawableStart="@drawable/ic_password"
+                android:drawablePadding="@dimen/dp_8"
+                android:gravity="center"
+                android:hint="@string/family_password_hint"
+                android:inputType="text"
+                android:paddingStart="@dimen/dp_12"
+                android:paddingEnd="@dimen/dp_20"
+                android:text="@={viewModel.password}"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/text_size_14" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cb_remember_password"
+            android:layout_width="@dimen/dp_14"
+            android:layout_height="@dimen/dp_14"
+            android:background="@drawable/selector_remember_password"
+            android:button="@null"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_remember_password"
+            app:layout_constraintEnd_toStartOf="@+id/tv_remember_password"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_remember_password" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_remember_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_16"
+            android:text="@string/remember_password"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cb_remember_password"
+            app:layout_constraintTop_toBottomOf="@+id/mcv_password_name" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_login"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_52"
+            android:layout_marginTop="@dimen/dp_60"
+            android:onClick="@{()->viewModel.login()}"
+            android:text="@string/login"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="bold"
+            app:cornerRadius="@dimen/dp_18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_remember_password"
+            app:layout_constraintWidth_percent=".4" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_no_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="@string/no_count_hint"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_14"
+            app:layout_constraintEnd_toStartOf="@id/tv_register"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:onClick="@{onClickListener}"
+            android:text="@string/register"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_14"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_no_count"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
