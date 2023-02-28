@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.wsy.ffms.R
 import com.wsy.ffms.core.base.BaseViewModel
 import com.wsy.ffms.db.AppDataBase
+import com.wsy.ffms.db.user.User
 
 /**
  *  author : wsy
@@ -23,9 +24,11 @@ class LoginViewModel(private val context: Context) : BaseViewModel() {
 
     fun login() {
         launchOnUI {
-            if (familyName.get().isNullOrEmpty() && password.get().isNullOrEmpty()) {
+            if (familyName.get().isNullOrEmpty() or password.get().isNullOrEmpty()) {
                 emitUiState(showError = context.getString(R.string.login_hint))
+                return@launchOnUI
             }
+//            AppDataBase.instance.getUserDao().insert(User(null,familyName.get(), password.get(),false,0))
             val user = AppDataBase.instance.getUserDao().getUserByName(familyName.get()!!)
             user?.let {
                 if (it.password == password.get()) emitUiState(loginSuccess = true)

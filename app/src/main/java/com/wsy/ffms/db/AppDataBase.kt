@@ -17,7 +17,9 @@ abstract class AppDataBase : RoomDatabase() {
     companion object {
         private const val DB_NAME = "ffms.db"
         val instance: AppDataBase by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
-            Room.databaseBuilder(MyApplication.CONTEXT, AppDataBase::class.java, DB_NAME).build()
+            Room.databaseBuilder(MyApplication.CONTEXT, AppDataBase::class.java, DB_NAME)
+                .allowMainThreadQueries()   //允许在主线程执行
+                .build()
         }
     }
 

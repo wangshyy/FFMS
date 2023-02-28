@@ -29,6 +29,14 @@ interface UserDao {
     @Query("SELECT * FROM user WHERE user_name= :userName COLLATE NOCASE")
     fun getUserByName(userName: String): User?
 
+    //获取最近一次登录的用户
+    @Query("SELECT * FROM user WHERE is_activate= 1 LIMIT 1")
+    fun getActivateUser(): User?
+
+    //清空最近登录记录
+    @Query("UPDATE user SET is_activate = 0")
+    fun userReset()
+
     //获取所有用户
     @Query("SELECT * FROM user")
     fun queryUserAll(): List<User?>?

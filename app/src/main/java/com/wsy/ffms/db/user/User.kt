@@ -12,9 +12,9 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "user")
 data class User(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = 0,
-    @ColumnInfo(name = "user_name") val userName: String?,
-    @ColumnInfo(name = "password") var password: String?,
-    @ColumnInfo(name = "is_rem_pwd") var isRemPwd: Boolean?, //是否记住密码
-    @ColumnInfo(name = "is_activate") var isActivate: Int?,  //当前登录用户
+    val id: Int?,
+    @ColumnInfo(name = "user_name") val userName: String? = null,
+    @ColumnInfo(name = "password") var password: String? = null,
+    @ColumnInfo(name = "is_rem_pwd") var isRemPwd: Boolean? = false, //是否记住密码
+    @ColumnInfo(name = "is_activate") var isActivate: Int? = 0,  //当前登录用户
 )
