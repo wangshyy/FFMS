@@ -4,9 +4,12 @@ import android.view.View
 import com.gyf.immersionbar.ktx.immersionBar
 import com.wsy.ffms.R
 import com.wsy.ffms.core.base.BaseVMActivity
+import com.wsy.ffms.core.etx.startKtxActivity
+import com.wsy.ffms.core.etx.startKtxActivityForResult
 import com.wsy.ffms.core.etx.toast
 import com.wsy.ffms.databinding.AcLoginBinding
 import com.wsy.ffms.db.AppDataBase
+import com.wsy.ffms.ui.register.RegisterActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -47,7 +50,15 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
         }
     }
 
-    override fun onClick(p0: View?) {
+    override fun onClick(v: View) {
+        when (v.id) {
+            //注册
+            R.id.tv_register -> startKtxActivity<RegisterActivity>(
+                values = arrayListOf(
+                    "extra_title" to resources.getString(R.string.register_title)
+                )
+            )
 
+        }
     }
 }

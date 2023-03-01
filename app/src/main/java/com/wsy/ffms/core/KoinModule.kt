@@ -1,6 +1,7 @@
 package com.wsy.ffms.core
 
 import com.wsy.ffms.ui.login.LoginViewModel
+import com.wsy.ffms.ui.register.RegisterViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -13,4 +14,5 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel { LoginViewModel(androidContext()) }
+    viewModel { RegisterViewModel(androidContext()) }
 }

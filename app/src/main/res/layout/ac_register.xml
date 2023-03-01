@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="title"
+            type="com.wsy.ffms.model.bean.Title" />
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="viewModel"
+            type="com.wsy.ffms.ui.register.RegisterViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_20">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/icon_arrow_left"
+            android:onClick="@{onClickListener}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_80"
+            android:text="@string/register_title"
+            android:textColor="@color/color_text"
+            android:textSize="@dimen/text_size_20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_back" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_family_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_40"
+            android:background="@drawable/shape_edit_text_bg"
+            android:hint="@string/family_name_hint"
+            android:inputType="text"
+            android:paddingVertical="@dimen/dp_10"
+            android:text="@={viewModel.familyName}"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/text_size_14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_pwd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/shape_edit_text_bg"
+            android:hint="@string/family_password_hint"
+            android:inputType="textPassword"
+            android:paddingVertical="@dimen/dp_10"
+            android:text="@={viewModel.password}"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/text_size_14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/et_family_name"
+            app:layout_constraintTop_toBottomOf="@+id/et_family_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_register"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/shape_login_btn_bg"
+            android:gravity="center"
+            android:onClick="@{()->viewModel.register()}"
+            android:text="@string/register_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16"
+            app:layout_constraintEnd_toEndOf="@+id/et_pwd"
+            app:layout_constraintStart_toStartOf="@+id/et_pwd"
+            app:layout_constraintTop_toBottomOf="@+id/et_pwd" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
