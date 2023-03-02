@@ -8,6 +8,7 @@ import com.wsy.ffms.R
 import com.wsy.ffms.core.base.BaseViewModel
 import com.wsy.ffms.db.AppDataBase
 import com.wsy.ffms.db.user.User
+import com.wsy.ffms.helper.UserHelper
 
 /**
  *  author : wsy
@@ -21,18 +22,27 @@ class LoginViewModel(private val context: Context) : BaseViewModel() {
 
     val familyName = ObservableField("")  //用户名
     val password = ObservableField("")  //密码
+    val isRemPwd = MutableLiveData(false)  //是否记住密码
 
     fun login() {
         launchOnUI {
+            emitUiState(showProgress = true)
             if (familyName.get().isNullOrEmpty() or password.get().isNullOrEmpty()) {
                 emitUiState(showError = context.getString(R.string.login_hint))
                 return@launchOnUI
             }
-//            AppDataBase.instance.getUserDao().insert(User(null,familyName.get(), password.get(),false,0))
-            val user = AppDataBase.instance.getUserDao().getUserByName(familyName.get()!!)
+            val user = AppDataBase.instance.getUserDao().getUserByName(familyName.get())
             user?.let {
-                if (it.password == password.get()) emitUiState(loginSuccess = true)
-                else emitUiState(showError = context.getString(R.string.password_error))
+                if (it.password == password.get()) {
+                    AppDataBase.instance.getUserDao().userReset()   //重置最近登录用户
+                    it.isActivate = 1   //将该用户设为最近登录用户
+                    if (it.isRemPwd != isRemPwd.value) {
+                        it.isRemPwd = isRemPwd.value  //记住密码字段改变时重新赋值
+                    }
+                    AppDataBase.instance.getUserDao().update(it)  //更新用户信息
+                    UserHelper.instance.setUser(it)   //UserHelper设置当前登录用户
+                    emitUiState(loginSuccess = true)
+                } else emitUiState(showError = context.getString(R.string.password_error))
             } ?: emitUiState(showError = context.getString(R.string.no_find_user_hint))
         }
     }

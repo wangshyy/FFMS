@@ -6,8 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.wsy.ffms.R
 import com.wsy.ffms.core.base.BaseViewModel
+import com.wsy.ffms.db.AppDataBase
+import com.wsy.ffms.db.user.User
 import com.wsy.ffms.ui.login.LoginViewModel
 import com.wsy.ffms.util.RegexUtils
+import java.lang.Exception
 
 /**
  *  author : wsy
@@ -24,12 +27,26 @@ class RegisterViewModel(private val context: Context) : BaseViewModel() {
 
     fun register() {
         launchOnUI {
+            emitUiState(showProgress = true)
             if (familyName.get().isNullOrEmpty() or password.get().isNullOrEmpty()) {
                 emitUiState(showError = context.getString(R.string.register_hint))
                 return@launchOnUI
             }
+            if (AppDataBase.instance.getUserDao().getUserByName(familyName.get()!!) != null) {
+                emitUiState(showError = context.getString(R.string.user_already_exists))
+                return@launchOnUI
+            }
             if (!RegexUtils.validatePassword(password.get())) {
                 emitUiState(showError = context.getString(R.string.password_format_rem))
+                return@launchOnUI
+            }
+
+            try {
+                AppDataBase.instance.getUserDao()
+                    .insert(User(null, familyName.get(), password.get()))
+                emitUiState(registerSuccess = true)
+            } catch (e: Exception) {
+                emitUiState(showError = e.message)
             }
         }
     }

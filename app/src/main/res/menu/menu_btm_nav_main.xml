@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <item
+        android:id="@+id/nav_home"
+        android:checked="true"
+        android:title="@string/main"
+        android:icon="@drawable/selector_main_home"/>
+    <item
+        android:id="@+id/nav_data_statistics"
+        android:title="@string/data_statistics"
+        android:icon="@drawable/selector_main_data_statistics"/>
+    <item
+        android:id="@+id/nav_income_expenditure"
+        android:title="@string/income_expenditure"
+        android:icon="@drawable/selector_main_income_expenditure" />
+    <item
+        android:id="@+id/nav_mine"
+        android:title="@string/mine"
+        android:icon="@drawable/selector_main_mine"  />
+</menu>

@@ -7,14 +7,27 @@
         <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/drawable/ic_icon.xml" value="0.325" />
         <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/drawable/ic_icon_foreground.xml" value="0.2671875" />
         <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2671875" />
+        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/drawable/progress_custom_bg.xml" value="0.3723076923076923" />
+        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/drawable/selector_main_data_statistics.xml" value="0.3723076923076923" />
+        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/drawable/selector_main_home.xml" value="0.3723076923076923" />
+        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/drawable/selector_main_income_expenditure.xml" value="0.3723076923076923" />
+        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/drawable/selector_main_mine.xml" value="0.3723076923076923" />
         <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/drawable/selector_remember_password.xml" value="0.3723076923076923" />
         <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/drawable/shape_box_bg.xml" value="0.3723076923076923" />
         <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/drawable/shape_edit_text_bg.xml" value="0.3723076923076923" />
         <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/drawable/shape_login_btn_bg.xml" value="0.23333333333333334" />
         <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/layout/ac_login.xml" value="0.25" />
+        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/layout/ac_main.xml" value="0.3619791666666667" />
         <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/layout/ac_register.xml" value="0.2" />
-        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/layout/activity_main.xml" value="0.3619791666666667" />
+        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/layout/fg_data_statistics.xml" value="0.3619791666666667" />
+        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/layout/fg_home.xml" value="0.3619791666666667" />
+        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/layout/fg_income_expenditure.xml" value="0.3619791666666667" />
+        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/layout/fg_mine.xml" value="0.3619791666666667" />
         <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/layout/layout_title.xml" value="0.33" />
+        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/layout/menu_btm_nav_main.xml" value="0.3619791666666667" />
+        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/layout/view_loading_progress.xml" value="0.3619791666666667" />
+        <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/menu/menu_btm_nav_main.xml" value="0.3564102564102564" />
         <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/mipmap-anydpi-v26/ic_icon.xml" value="0.2671875" />
         <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.325" />
         <entry key="..\:/wsy_work/Android/AndroidWorkSpace/FFMS/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2671875" />

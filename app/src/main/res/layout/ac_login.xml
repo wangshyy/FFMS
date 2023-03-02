@@ -111,6 +111,7 @@
             android:layout_height="@dimen/dp_14"
             android:background="@drawable/selector_remember_password"
             android:button="@null"
+            android:checked="@={viewModel.isRemPwd()}"
             app:layout_constraintBottom_toBottomOf="@+id/tv_remember_password"
             app:layout_constraintEnd_toStartOf="@+id/tv_remember_password"
             app:layout_constraintHorizontal_chainStyle="packed"

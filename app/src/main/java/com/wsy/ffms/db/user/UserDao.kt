@@ -27,7 +27,7 @@ interface UserDao {
 
     //根据用户名查询用户,不区分大小写
     @Query("SELECT * FROM user WHERE user_name= :userName COLLATE NOCASE")
-    fun getUserByName(userName: String): User?
+    fun getUserByName(userName: String?): User?
 
     //获取最近一次登录的用户
     @Query("SELECT * FROM user WHERE is_activate= 1 LIMIT 1")

@@ -7,6 +7,7 @@ import com.wsy.ffms.core.base.BaseVMActivity
 import com.wsy.ffms.core.etx.toast
 import com.wsy.ffms.databinding.AcRegisterBinding
 import com.wsy.ffms.model.bean.Title
+import com.wsy.ffms.widget.LoadingProgressDialog
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -17,6 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class RegisterActivity : BaseVMActivity(), View.OnClickListener {
     private val mRegisterViewModel by viewModel<RegisterViewModel>()
     private val mBinding by binding<AcRegisterBinding>(R.layout.ac_register)
+    private var progressDialog: LoadingProgressDialog? = null
     override fun initView() {
         immersionBar {
             fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
@@ -36,11 +38,19 @@ class RegisterActivity : BaseVMActivity(), View.OnClickListener {
 
     override fun startObserve() {
         mRegisterViewModel.uiState.observe(this) {
+            if (it.showProgress) {
+                progressDialog?.show() ?: let {
+                    progressDialog = LoadingProgressDialog.show(this, cancelable = true)
+                }
+            }
             it.showError?.let { error ->
+                progressDialog?.dismiss()
                 toast(this, error)
             }
             if (it.registerSuccess) {
-                toast(resources.getString(R.string.login_success))
+                progressDialog?.dismiss()
+                toast(resources.getString(R.string.register_success))
+                finish()
             }
         }
     }
