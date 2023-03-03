@@ -12,4 +12,5 @@
     <color name="color_black_333333">#333333</color>
     <color name="color_text">#333333</color>
     <color name="color_activity_bg">#F7F7FC</color>
+    <color name="transparent">#00000000</color>
 </resources>

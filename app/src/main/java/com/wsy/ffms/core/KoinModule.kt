@@ -1,6 +1,8 @@
 package com.wsy.ffms.core
 
 import com.wsy.ffms.ui.login.LoginViewModel
+import com.wsy.ffms.ui.mine.MineViewModel
+import com.wsy.ffms.ui.mine.modifypassword.ModifyPasswordViewModel
 import com.wsy.ffms.ui.register.RegisterViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -15,4 +17,6 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { LoginViewModel(androidContext()) }
     viewModel { RegisterViewModel(androidContext()) }
+    viewModel { MineViewModel() }
+    viewModel { ModifyPasswordViewModel() }
 }

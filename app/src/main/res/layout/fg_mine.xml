@@ -1,40 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="viewModel"
+            type="com.wsy.ffms.ui.mine.MineViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/color_activity_bg"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/color_activity_bg">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_180"
+            android:layout_height="@dimen/dp_200"
             android:background="@color/colorPrimary"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/appCompatImageView"
                 android:layout_width="@dimen/dp_80"
                 android:layout_height="@dimen/dp_80"
-                android:layout_marginStart="@dimen/dp_20"
-                android:background="@color/white"
+                android:layout_marginStart="24dp"
+                android:src="@drawable/icon_default_head_picture"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.7" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_family_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:text=""
-                android:textSize="@dimen/text_size_20"
-                tools:text="张三的家庭"
                 android:layout_marginStart="@dimen/dp_10"
+                android:text="@{viewModel.familyName}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_20"
                 app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
-                app:layout_constraintTop_toTopOf="@+id/appCompatImageView" />
+                app:layout_constraintTop_toTopOf="@+id/appCompatImageView"
+                tools:text="张三的家庭" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,17 +63,20 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_modify_pwd"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_38"
-                android:gravity="center_vertical"
+                android:layout_height="@dimen/dp_42"
                 android:drawableStart="@drawable/ic_modify_password"
-                android:drawablePadding="@dimen/dp_10"
                 android:drawableEnd="@drawable/icon_arraw_right"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:onClick="@{onClickListener}"
                 android:text="@string/modify_pwd"
                 android:textColor="@color/color_text"
                 android:textSize="@dimen/text_size_14"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <View
                 android:id="@+id/line1"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/color_activity_bg"
@@ -73,10 +89,11 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_logout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_38"
+            android:layout_height="@dimen/dp_42"
+            android:layout_margin="@dimen/dp_10"
             android:background="@drawable/shape_box_bg"
             android:gravity="center"
-            android:layout_margin="@dimen/dp_10"
+            android:onClick="@{onClickListener}"
             android:paddingHorizontal="@dimen/dp_10"
             android:text="@string/logout"
             android:textColor="@color/colorPrimary"
