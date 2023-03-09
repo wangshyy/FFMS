@@ -1,6 +1,5 @@
-package com.wsy.ffms.ui.mine.modifypassword
+package com.wsy.ffms.ui.mine.basicfunction.modifypassword
 
-import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.wsy.ffms.core.base.BaseViewModel

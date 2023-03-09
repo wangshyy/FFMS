@@ -1,4 +1,4 @@
-package com.wsy.ffms.ui.mine.modifypassword
+package com.wsy.ffms.ui.mine.basicfunction.modifypassword
 
 import android.view.View
 import com.wsy.ffms.R

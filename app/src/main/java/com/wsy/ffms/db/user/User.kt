@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 /**
  *  author : wsy
  *  date   : 2023/2/24
- *  desc   :
+ *  desc   : user表
  */
 @Entity(tableName = "user")
 data class User(

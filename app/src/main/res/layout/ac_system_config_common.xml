@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="title"
+            type="com.wsy.ffms.model.bean.Title" />
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="viewModel"
+            type="com.wsy.ffms.ui.mine.systemcofig.SystemConfigViewModel" />
+
+        <variable
+            name="isAdding"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_activity_bg">
+
+        <include
+            android:id="@+id/tool_title"
+            layout="@layout/layout_title"
+            app:title="@{title}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tool_title" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_add_type"
+            visibleUnless="@{isAdding}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/shape_box_bg"
+            android:hint="@string/system_config_common_type_hint"
+            android:inputType="text"
+            android:minHeight="@dimen/dp_10"
+            android:padding="@dimen/dp_10"
+            android:text="@={viewModel.type}"
+            android:textColor="@color/color_text"
+            android:textSize="@dimen/text_size_14"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+            app:layout_constraintWidth_percent=".8" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_operate"
+            visibleUnless="@{isAdding}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:background="@drawable/shape_box_bg"
+            android:gravity="center"
+            android:onClick="@{onClickListener}"
+            android:text="@string/common_cancel"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_12"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/et_add_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/et_add_type"
+            app:layout_constraintTop_toTopOf="@+id/et_add_type" />
+
+        <com.google.android.material.card.MaterialCardView
+            visibleUnless="@{!isAdding}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_16"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardCornerRadius="@dimen/dp_8"
+            app:cardElevation="@dimen/dp_0"
+            app:layout_constraintTop_toBottomOf="@+id/et_add_type"
+            tools:layout_editor_absoluteX="11dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_add"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:gravity="center"
+                android:onClick="@{onClickListener}"
+                android:text="@string/add"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_14"
+                android:textStyle="bold" />
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

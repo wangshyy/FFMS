@@ -8,7 +8,8 @@ import com.wsy.ffms.core.etx.startKtxActivity
 import com.wsy.ffms.databinding.FgMineBinding
 import com.wsy.ffms.db.AppDataBase
 import com.wsy.ffms.helper.UserHelper
-import com.wsy.ffms.ui.mine.modifypassword.ModifyPasswordActivity
+import com.wsy.ffms.ui.mine.basicfunction.modifypassword.ModifyPasswordActivity
+import com.wsy.ffms.ui.mine.systemcofig.SystemConfigCommonActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -38,6 +39,13 @@ class MineFragment : BaseVMFragment<FgMineBinding>(R.layout.fg_mine), View.OnCli
         when (v.id) {
             //修改密码
             R.id.tv_modify_pwd -> startKtxActivity<ModifyPasswordActivity>()
+            //账号类型
+            R.id.tv_count_type -> startKtxActivity<SystemConfigCommonActivity>(value = ("pageType" to "1"))
+            //消费类型
+            R.id.tv_consumption_type -> startKtxActivity<SystemConfigCommonActivity>(value = ("pageType" to "2"))
+            //收入类型
+            R.id.tv_income_type -> startKtxActivity<SystemConfigCommonActivity>(value = ("pageType" to "3"))
+
             //登出
             R.id.tv_logout -> {
                 XPopup.Builder(requireContext())

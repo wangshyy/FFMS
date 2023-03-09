@@ -23,15 +23,19 @@
             android:name=".ui.register.RegisterActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mine.modifypassword.ModifyPasswordActivity"
+            android:name="com.wsy.ffms.ui.mine.basicfunction.modifypassword.ModifyPasswordActivity"
             android:exported="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wsy.ffms.ui.mine.systemcofig.SystemConfigCommonActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

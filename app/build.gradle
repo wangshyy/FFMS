@@ -90,4 +90,10 @@ dependencies {
     def nav_version = "2.2.0"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    //recyclerview base adapter
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.10'
+
+    //SwipeRecyclerView
+    implementation 'com.tubb.smrv:swipemenu-recyclerview:5.4.8'
 }
