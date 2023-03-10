@@ -43,10 +43,8 @@
     <string name="modify_success">修改成功</string>
     <string name="old_pwd_error">旧密码与登录密码不一致</string>
     <string name="logout_reminder">您确认要退出帐号吗？</string>
-
     <string name="basic_function">基本功能</string>
     <string name="modify_pwd">修改密码</string>
-
     <string name="sys_config">系统配置</string>
     <string name="count_type">账户类型</string>
     <string name="consumption_type">消费类型</string>
@@ -55,5 +53,10 @@
     <string name="system_config_common_type_hint">请输入类型</string>
     <string name="no_data">暂无数据</string>
     <string name="add_success">添加成功</string>
+    <string name="delete_success">删除成功</string>
+    <string name="delete_reminder">确认删除?</string>
 
+    <!-- 收入/支出 -->
+    <string name="income">收入</string>
+    <string name="expenditure">支出</string>
 </resources>

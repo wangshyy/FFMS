@@ -76,6 +76,30 @@ class SystemConfigViewModel : BaseViewModel() {
         }
     }
 
+    //从数据库删除类型数据
+    fun deleteType(id: Int) {
+        emitUiState(showProgress = true)
+        launchOnUI {
+            when (pageType) {
+                //账户类型
+                "1" -> {
+                    AppDataBase.instance.getCountTypeDao().delete(CountType(id))
+                    emitUiState(deleteSuccess = true)
+                }
+                //消费类型
+                "2" -> {
+                    AppDataBase.instance.getConsumptionDao().delete(Consumption(id))
+                    emitUiState(deleteSuccess = true)
+                }
+                //收入类型
+                "3" -> {
+                    AppDataBase.instance.getIncomeDao().delete(Income(id))
+                    emitUiState(deleteSuccess = true)
+                }
+            }
+        }
+    }
+
 
     private fun emitUiState(
         showProgress: Boolean = false,

@@ -48,14 +48,14 @@
             android:background="@drawable/shape_box_bg"
             android:hint="@string/system_config_common_type_hint"
             android:inputType="text"
-            android:minHeight="@dimen/dp_10"
+            android:minHeight="@dimen/dp_46"
             android:padding="@dimen/dp_10"
             android:text="@={viewModel.type}"
             android:textColor="@color/color_text"
             android:textSize="@dimen/text_size_14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-            app:layout_constraintWidth_percent=".8" />
+            app:layout_constraintWidth_percent=".7" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_operate"
@@ -98,7 +98,5 @@
                 android:textSize="@dimen/text_size_14"
                 android:textStyle="bold" />
         </com.google.android.material.card.MaterialCardView>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

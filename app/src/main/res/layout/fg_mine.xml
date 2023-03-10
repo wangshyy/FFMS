@@ -23,7 +23,7 @@
             android:id="@+id/cl_title"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_200"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/bg_mine"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.imageview.ShapeableImageView

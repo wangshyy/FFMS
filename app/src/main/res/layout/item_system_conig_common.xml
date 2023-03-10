@@ -45,7 +45,14 @@
             android:id="@id/smMenuViewRight"
             android:layout_width="@dimen/dp_46"
             android:layout_height="match_parent">
-
+            <View
+                android:id="@+id/line"
+                android:layout_width="1dp"
+                android:layout_height="@dimen/dp_26"
+                android:background="@color/color_line_grey_266F7685"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
             <ImageView
                 android:layout_width="@dimen/dp_26"
                 android:layout_height="@dimen/dp_26"

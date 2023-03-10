@@ -90,6 +90,19 @@ class SystemConfigCommonActivity : BaseVMActivity(), View.OnClickListener {
                 mViewModel.getAllType()
                 toast(applicationContext.getString(R.string.add_success))
             }
+
+            if (it.deleteSuccess) {
+                progressDialog?.dismiss()
+                mViewModel.getAllType()
+                toast(applicationContext.getString(R.string.delete_success))
+            }
+        }
+
+        adapter.deleteId.observe(this) {
+            it?.let {
+                mViewModel.deleteType(it)
+                adapter.clearDeleteId()
+            }
         }
     }
 
