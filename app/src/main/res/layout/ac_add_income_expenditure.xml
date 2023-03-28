@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="title"
+            type="com.wsy.ffms.model.bean.Title" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_activity_bg">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_46"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@{title}" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/shape_box_bg"
+            android:padding="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_type_title"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_30"
+                android:gravity="center"
+                android:text="@string/type"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_14"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/icon_arrow_right"
+                android:drawablePadding="@dimen/dp_6"
+                android:text="@string/expenditure"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_14"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_type_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_type_title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_expenditure_type_title"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_30"
+                android:gravity="center"
+                android:text="@string/consumption_type"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_14"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_type_title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_expenditure_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/icon_arrow_right"
+                android:drawablePadding="@dimen/dp_6"
+                android:hint="@string/expenditure_type_hint"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_14"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_expenditure_type_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_expenditure_type_title" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

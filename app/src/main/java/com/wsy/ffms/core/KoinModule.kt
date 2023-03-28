@@ -1,5 +1,6 @@
 package com.wsy.ffms.core
 
+import com.wsy.ffms.ui.incomeexpenditure.add.AddIncomeExpenditureViewModel
 import com.wsy.ffms.ui.login.LoginViewModel
 import com.wsy.ffms.ui.mine.MineViewModel
 import com.wsy.ffms.ui.mine.basicfunction.modifypassword.ModifyPasswordViewModel
@@ -21,4 +22,5 @@ val viewModelModule = module {
     viewModel { MineViewModel() }
     viewModel { ModifyPasswordViewModel() }
     viewModel { SystemConfigViewModel() }
+    viewModel { AddIncomeExpenditureViewModel() }
 }

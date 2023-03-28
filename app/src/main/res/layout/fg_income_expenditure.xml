@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
 
         <variable
             name="title"
             type="com.wsy.ffms.model.bean.Title" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,6 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/transparent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <include
             android:id="@+id/toolbar"
             layout="@layout/layout_title"
@@ -31,17 +34,30 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorFullWidth="false"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabTextAppearance="@style/MyTabLayoutStyle"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:tabIndicator="@drawable/shape_tab_indicator"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            app:tabIndicatorFullWidth="false"
+            app:tabRippleColor="@color/transparent"
+            app:tabTextAppearance="@style/MyTabLayoutStyle" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:background="@color/color_activity_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_12"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_add"
+            app:borderWidth="@dimen/dp_0"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

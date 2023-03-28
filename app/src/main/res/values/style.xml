@@ -19,6 +19,5 @@
     
     <style name="MyTabLayoutStyle">
         <item name="android:textSize">@dimen/text_size_16</item>
-        <item name="android:textStyle">bold</item>
     </style>
 </resources>

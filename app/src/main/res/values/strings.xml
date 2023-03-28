@@ -5,6 +5,7 @@
     <!-- 公用文本 -->
     <string name="common_confirm">确定</string>
     <string name="common_cancel">取消</string>
+    <string name="common_add">新增</string>
 
     <!-- 登录页 -->
     <string name="family_login">家庭登录</string>
@@ -59,4 +60,7 @@
     <!-- 收入/支出 -->
     <string name="income">收入</string>
     <string name="expenditure">支出</string>
+    <string name="type">类型</string>
+    <string name="type_hint">请选择类型</string>
+    <string name="expenditure_type_hint">请选择消费类型</string>
 </resources>

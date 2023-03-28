@@ -4,9 +4,11 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.wsy.ffms.R
 import com.wsy.ffms.adapter.IncExpPagerAdapter
 import com.wsy.ffms.core.base.BaseVMFragment
+import com.wsy.ffms.core.etx.startKtxActivity
 import com.wsy.ffms.databinding.FgIncomeExpenditureBinding
 import com.wsy.ffms.model.bean.Title
 import com.wsy.ffms.ui.MainActivity
+import com.wsy.ffms.ui.incomeexpenditure.add.AddIncomeExpenditureActivity
 
 /**
  *  author : wsy
@@ -31,6 +33,11 @@ class IncomeExpenditureFragment :
                     else -> tab.text = getString(R.string.expenditure)
                 }
             }.attach()
+
+            fabAdd.setOnClickListener {
+                //新增
+                startKtxActivity<AddIncomeExpenditureActivity>()
+            }
         }
     }
 

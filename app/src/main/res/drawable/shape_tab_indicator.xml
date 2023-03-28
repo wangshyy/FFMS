@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/colorPrimary" />
-    <corners android:radius="@dimen/dp_10" />
-    <size android:width="@dimen/dp_1" android:height="@dimen/dp_1"/>
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="@dimen/dp_12"
+        android:height="@dimen/dp_2"
+        android:bottom="@dimen/dp_8"
+        android:gravity="center">
+        <shape>
+            <solid android:color="@color/colorPrimary" />
+            <corners android:radius="@dimen/dp_2" />
+        </shape>
+    </item>
+</layer-list>
