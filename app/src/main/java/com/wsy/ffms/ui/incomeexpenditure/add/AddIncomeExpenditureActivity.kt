@@ -1,19 +1,25 @@
 package com.wsy.ffms.ui.incomeexpenditure.add
 
 import android.graphics.Color
+import android.view.View
+import android.widget.TimePicker
 import com.gyf.immersionbar.ktx.immersionBar
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopupext.listener.TimePickerListener
+import com.lxj.xpopupext.popup.TimePickerPopup
 import com.wsy.ffms.R
 import com.wsy.ffms.core.base.BaseVMActivity
 import com.wsy.ffms.databinding.AcAddIncomeExpenditureBinding
 import com.wsy.ffms.model.bean.Title
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 /**
  *  author : wsy
  *  date   : 2023/3/28
  *  desc   : 新增收入支出页面
  */
-class AddIncomeExpenditureActivity : BaseVMActivity() {
+class AddIncomeExpenditureActivity : BaseVMActivity(), View.OnClickListener {
     private val mBinding by binding<AcAddIncomeExpenditureBinding>(R.layout.ac_add_income_expenditure)
     private val mViewModel by viewModel<AddIncomeExpenditureViewModel>()
     override fun initView() {
@@ -23,13 +29,80 @@ class AddIncomeExpenditureActivity : BaseVMActivity() {
             statusBarDarkFont(true)
         }
         mBinding.apply {
+            onClickListener = this@AddIncomeExpenditureActivity
             title = Title(getString(R.string.common_add), true) { onBackPressed() }
+            viewModel = mViewModel
         }
     }
 
     override fun initData() {
+        mViewModel.type.value = "0"
+        mViewModel.typeLabel.value = getString(R.string.expenditure)
     }
 
     override fun startObserve() {
+
+        mViewModel.uiState.observe(this) {
+            it.showSuccess?.let { list ->
+                val typeList: MutableList<String> = mutableListOf()
+                list.forEach { bean ->
+                    typeList.add(bean.content!!)
+                }
+                XPopup.Builder(this)
+                    .hasShadowBg(false)//去掉半透明背景
+                    .atView(mBinding.tvIETypeType)//添加依附的view
+                    .asAttachList(
+                        typeList.toTypedArray(), null
+                    ) { _, label ->
+                        mViewModel.eIType.value = label
+                    }.show()
+            }
+        }
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            //选择类型
+            R.id.tv_type -> {
+                XPopup.Builder(this)
+                    .hasShadowBg(false)//去掉半透明背景
+                    .atView(mBinding.tvType)//添加依附的view
+                    .asAttachList(
+                        arrayOf(
+                            getString(R.string.expenditure),
+                            getString(R.string.income)
+                        ), null
+                    ) { position, label ->
+                        if (position.toString() == mViewModel.type.value) return@asAttachList   //相同是不做任何操作
+                        mViewModel.eIType.value = null  //清空消费收入类型
+                        mViewModel.type.value = position.toString()
+                        mViewModel.typeLabel.value = label
+                    }.show()
+            }
+
+            R.id.tv_i_e_type_type -> {
+                mViewModel.getTypeList()
+            }
+
+            R.id.tv_date -> {
+                val date = Calendar.getInstance()
+                val popup: TimePickerPopup = TimePickerPopup(this)
+                    .setMode(TimePickerPopup.Mode.YMD)
+                    .setDefaultDate(date)
+                    .setDateRang(null, date)
+                    .setTimePickerListener(object : TimePickerListener {
+                        override fun onTimeChanged(date: Date?) {
+                            //时间改变
+                        }
+
+                        override fun onTimeConfirm(date: Date?, view: View?) {
+                            //点击确认时间
+                        }
+                    })
+                XPopup.Builder(this)
+                    .asCustom(popup)
+                    .show()
+            }
+        }
     }
 }

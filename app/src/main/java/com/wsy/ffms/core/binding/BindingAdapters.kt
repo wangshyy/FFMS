@@ -1,8 +1,9 @@
 package com.wsy.ffms.core.binding
 
-import android.opengl.Visibility
 import android.view.View
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
+import com.wsy.ffms.R
 
 /**
  *  author : wsy
@@ -15,4 +16,13 @@ fun bindVisibleUnless(view: View, visible: Boolean) {
         View.VISIBLE
     else
         View.GONE
+}
+
+@BindingAdapter("typeStatus")
+fun AppCompatTextView.initTextByType(status: String?) {
+    text = when (status) {
+        "0" -> context.getString(R.string.consumption_type)
+        "1" -> context.getString(R.string.income_type)
+        else -> context.getString(R.string.consumption_type)
+    }
 }
