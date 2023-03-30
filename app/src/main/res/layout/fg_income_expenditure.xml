@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_12"
             android:backgroundTint="@color/white"
-            android:src="@drawable/ic_add"
+            android:src="@drawable/icon_add"
             app:borderWidth="@dimen/dp_0"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"

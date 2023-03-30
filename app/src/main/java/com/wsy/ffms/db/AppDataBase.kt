@@ -4,12 +4,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.wsy.ffms.MyApplication
-import com.wsy.ffms.db.consumption.Consumption
-import com.wsy.ffms.db.consumption.ConsumptionDao
+import com.wsy.ffms.db.consumptiontype.ConsumptionType
+import com.wsy.ffms.db.consumptiontype.ConsumptionTypeDao
 import com.wsy.ffms.db.counttype.CountType
 import com.wsy.ffms.db.counttype.CountTypeDao
+import com.wsy.ffms.db.familymember.FamilyMember
+import com.wsy.ffms.db.familymember.FamilyMemberDao
 import com.wsy.ffms.db.income.Income
 import com.wsy.ffms.db.income.IncomeDao
+import com.wsy.ffms.db.incometype.IncomeType
+import com.wsy.ffms.db.incometype.IncomeTypeDao
 import com.wsy.ffms.db.user.User
 import com.wsy.ffms.db.user.UserDao
 
@@ -19,8 +23,8 @@ import com.wsy.ffms.db.user.UserDao
  *  desc   :
  */
 @Database(
-    entities = [User::class, CountType::class, Consumption::class, Income::class],
-    version = 3,
+    entities = [User::class, CountType::class, ConsumptionType::class, IncomeType::class, FamilyMember::class, Income::class],
+    version = 5,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {
@@ -36,6 +40,8 @@ abstract class AppDataBase : RoomDatabase() {
 
     abstract fun getUserDao(): UserDao
     abstract fun getCountTypeDao(): CountTypeDao
-    abstract fun getConsumptionDao(): ConsumptionDao
+    abstract fun getConsumptionTypeDao(): ConsumptionTypeDao
+    abstract fun getIncomeTypeDao(): IncomeTypeDao
+    abstract fun getFamilyMemberDao(): FamilyMemberDao
     abstract fun getIncomeDao(): IncomeDao
 }

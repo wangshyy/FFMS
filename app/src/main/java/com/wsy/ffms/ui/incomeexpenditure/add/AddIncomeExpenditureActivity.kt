@@ -9,9 +9,11 @@ import com.lxj.xpopupext.listener.TimePickerListener
 import com.lxj.xpopupext.popup.TimePickerPopup
 import com.wsy.ffms.R
 import com.wsy.ffms.core.base.BaseVMActivity
+import com.wsy.ffms.core.etx.toast
 import com.wsy.ffms.databinding.AcAddIncomeExpenditureBinding
 import com.wsy.ffms.model.bean.Title
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -32,6 +34,7 @@ class AddIncomeExpenditureActivity : BaseVMActivity(), View.OnClickListener {
             onClickListener = this@AddIncomeExpenditureActivity
             title = Title(getString(R.string.common_add), true) { onBackPressed() }
             viewModel = mViewModel
+            isIncome = false //初始为支出
         }
     }
 
@@ -54,8 +57,16 @@ class AddIncomeExpenditureActivity : BaseVMActivity(), View.OnClickListener {
                     .asAttachList(
                         typeList.toTypedArray(), null
                     ) { _, label ->
-                        mViewModel.eIType.value = label
+                        if (it.isFamilyMember) mViewModel.familyMember.value = label
+                        else mViewModel.eIType.value = label
                     }.show()
+            }
+            it.showError?.let { error ->
+                toast(error)
+            }
+            if (it.addSuccess){
+                toast(getString(R.string.add_success))
+                finish()
             }
         }
     }
@@ -74,29 +85,31 @@ class AddIncomeExpenditureActivity : BaseVMActivity(), View.OnClickListener {
                         ), null
                     ) { position, label ->
                         if (position.toString() == mViewModel.type.value) return@asAttachList   //相同是不做任何操作
+                        mBinding.isIncome = position == 1
                         mViewModel.eIType.value = null  //清空消费收入类型
+                        mViewModel.familyMember.value = null  //清空家庭成员
                         mViewModel.type.value = position.toString()
                         mViewModel.typeLabel.value = label
                     }.show()
             }
 
-            R.id.tv_i_e_type_type -> {
-                mViewModel.getTypeList()
-            }
+            R.id.tv_i_e_type_type -> mViewModel.getTypeList()
 
             R.id.tv_date -> {
+                val format = SimpleDateFormat("yyyy-MM-dd")
                 val date = Calendar.getInstance()
                 val popup: TimePickerPopup = TimePickerPopup(this)
                     .setMode(TimePickerPopup.Mode.YMD)
                     .setDefaultDate(date)
                     .setDateRang(null, date)
                     .setTimePickerListener(object : TimePickerListener {
-                        override fun onTimeChanged(date: Date?) {
+                        override fun onTimeChanged(date: Date) {
                             //时间改变
                         }
 
-                        override fun onTimeConfirm(date: Date?, view: View?) {
+                        override fun onTimeConfirm(date: Date, view: View) {
                             //点击确认时间
+                            mViewModel.date.value = format.format(date)
                         }
                     })
                 XPopup.Builder(this)

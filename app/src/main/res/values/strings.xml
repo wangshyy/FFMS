@@ -50,8 +50,10 @@
     <string name="count_type">账户类型</string>
     <string name="consumption_type">消费类型</string>
     <string name="income_type">收入类型</string>
+    <string name="family_member">家庭成员</string>
     <string name="add">+ 添加</string>
     <string name="system_config_common_type_hint">请输入类型</string>
+    <string name="input_hint">请输入</string>
     <string name="no_data">暂无数据</string>
     <string name="add_success">添加成功</string>
     <string name="delete_success">删除成功</string>
@@ -69,4 +71,5 @@
     <string name="date">日期</string>
     <string name="date_hint">请选择日期</string>
     <string name="select_hint">请选择</string>
+    <string name="add_hint">请完善所有信息</string>
 </resources>

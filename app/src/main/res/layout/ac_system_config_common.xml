@@ -46,7 +46,7 @@
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
             android:background="@drawable/shape_box_bg"
-            android:hint="@string/system_config_common_type_hint"
+            android:hint="@string/input_hint"
             android:inputType="text"
             android:minHeight="@dimen/dp_46"
             android:padding="@dimen/dp_10"
@@ -55,7 +55,7 @@
             android:textSize="@dimen/text_size_14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-            app:layout_constraintWidth_percent=".7" />
+            app:layout_constraintWidth_percent=".75" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_operate"

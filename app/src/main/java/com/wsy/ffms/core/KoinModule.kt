@@ -22,5 +22,5 @@ val viewModelModule = module {
     viewModel { MineViewModel() }
     viewModel { ModifyPasswordViewModel() }
     viewModel { SystemConfigViewModel() }
-    viewModel { AddIncomeExpenditureViewModel() }
+    viewModel { AddIncomeExpenditureViewModel(androidContext()) }
 }

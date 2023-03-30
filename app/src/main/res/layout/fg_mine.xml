@@ -54,11 +54,11 @@
             android:id="@+id/tv_basic_fun"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
             android:text="@string/basic_function"
-            android:textSize="@dimen/text_size_12"
             android:textColor="@color/color_text"
+            android:textSize="@dimen/text_size_12"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cl_title" />
 
@@ -118,6 +118,30 @@
             android:paddingHorizontal="@dimen/dp_10"
             app:layout_constraintTop_toBottomOf="@+id/tv_sys_config">
 
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_family_member"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_52"
+                android:drawableStart="@drawable/icon_family_member"
+                android:drawableEnd="@drawable/icon_arrow_right"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:onClick="@{onClickListener}"
+                android:text="@string/family_member"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_14"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/line_family_member"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_activity_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_family_member" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_count_type"
                 android:layout_width="match_parent"
@@ -130,7 +154,7 @@
                 android:text="@string/count_type"
                 android:textColor="@color/color_text"
                 android:textSize="@dimen/text_size_14"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/line_family_member" />
 
             <View
                 android:id="@+id/line_count_type"
@@ -177,7 +201,7 @@
                 android:text="@string/income_type"
                 android:textColor="@color/color_text"
                 android:textSize="@dimen/text_size_14"
-                app:layout_constraintTop_toBottomOf="@+id/line_consumption_type"/>
+                app:layout_constraintTop_toBottomOf="@+id/line_consumption_type" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView

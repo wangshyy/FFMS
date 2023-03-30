@@ -18,7 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 /**
  *  author : wsy
  *  date   : 2023/3/8
- *  desc   : 系统配置公用页面 1、账户类型 2、消费类型 3、收入类型
+ *  desc   : 系统配置公用页面 0、家庭成员 1、账户类型 2、消费类型 3、收入类型
  */
 class SystemConfigCommonActivity : BaseVMActivity(), View.OnClickListener {
     private val binding by binding<AcSystemConfigCommonBinding>(R.layout.ac_system_config_common)
@@ -38,9 +38,10 @@ class SystemConfigCommonActivity : BaseVMActivity(), View.OnClickListener {
             viewModel = mViewModel
             title = Title(
                 when (mViewModel.pageType) {
-                    "1" -> applicationContext.getString(R.string.count_type)
-                    "2" -> applicationContext.getString(R.string.consumption_type)
-                    else -> applicationContext.getString(R.string.income_type)
+                    "0" -> getString(R.string.family_member)
+                    "1" -> getString(R.string.count_type)
+                    "2" -> getString(R.string.consumption_type)
+                    else -> getString(R.string.income_type)
                 }
             ) { onBackPressed() }
             recyclerView.apply {
@@ -66,9 +67,9 @@ class SystemConfigCommonActivity : BaseVMActivity(), View.OnClickListener {
 
         mViewModel.type.observe(this) {
             if (!it.isNullOrEmpty()) {
-                binding.tvOperate.text = resources.getString(R.string.common_confirm)
+                binding.tvOperate.text = getString(R.string.common_confirm)
             } else {
-                binding.tvOperate.text = resources.getString(R.string.common_cancel)
+                binding.tvOperate.text = getString(R.string.common_cancel)
             }
         }
 
@@ -88,13 +89,13 @@ class SystemConfigCommonActivity : BaseVMActivity(), View.OnClickListener {
             if (it.addSuccess) {
                 progressDialog?.dismiss()
                 mViewModel.getAllType()
-                toast(applicationContext.getString(R.string.add_success))
+                toast(getString(R.string.add_success))
             }
 
             if (it.deleteSuccess) {
                 progressDialog?.dismiss()
                 mViewModel.getAllType()
-                toast(applicationContext.getString(R.string.delete_success))
+                toast(getString(R.string.delete_success))
             }
         }
 

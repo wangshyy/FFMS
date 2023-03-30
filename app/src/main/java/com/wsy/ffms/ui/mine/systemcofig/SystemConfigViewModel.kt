@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.wsy.ffms.core.base.BaseViewModel
 import com.wsy.ffms.db.AppDataBase
-import com.wsy.ffms.db.consumption.Consumption
+import com.wsy.ffms.db.consumptiontype.ConsumptionType
 import com.wsy.ffms.db.counttype.CountType
-import com.wsy.ffms.db.income.Income
+import com.wsy.ffms.db.familymember.FamilyMember
+import com.wsy.ffms.db.incometype.IncomeType
 import com.wsy.ffms.model.bean.SystemConfigCommonBean
 
 /**
@@ -18,9 +19,9 @@ class SystemConfigViewModel : BaseViewModel() {
     private var _uiState = MutableLiveData<SystemConfigUiModel>()
     val uiState: LiveData<SystemConfigUiModel>
         get() = _uiState
-    var pageType: String? = null //pageType：1->账户类型 2->消费类型 3->收入类型
+    var pageType: String? = null //pageType：0->家庭成员 1->账户类型 2->消费类型 3->收入类型
 
-    val type = MutableLiveData<String>() //类型
+    val type = MutableLiveData<String>() //类型/姓名
 
     //获取类型列表
     fun getAllType() {
@@ -28,6 +29,12 @@ class SystemConfigViewModel : BaseViewModel() {
         launchOnUI {
             val typeList = mutableListOf<SystemConfigCommonBean>()
             when (pageType) {
+                //获取家庭成员
+                "0" -> {
+                    (AppDataBase.instance.getFamilyMemberDao().queryAllFamilyMember())?.forEach {
+                        typeList.add(SystemConfigCommonBean(it.id, it.name))
+                    }
+                }
                 //获取账户类型
                 "1" -> {
                     (AppDataBase.instance.getCountTypeDao().queryAllCountType())?.forEach {
@@ -36,13 +43,13 @@ class SystemConfigViewModel : BaseViewModel() {
                 }
                 //获取消费类型
                 "2" -> {
-                    (AppDataBase.instance.getConsumptionDao().queryAllConsumptionType())?.forEach {
+                    (AppDataBase.instance.getConsumptionTypeDao().queryAllConsumptionType())?.forEach {
                         typeList.add(SystemConfigCommonBean(it.id, it.typeName))
                     }
                 }
                 //获取收入类型
                 "3" -> {
-                    (AppDataBase.instance.getIncomeDao().queryAllIncomeType())?.forEach {
+                    (AppDataBase.instance.getIncomeTypeDao().queryAllIncomeType())?.forEach {
                         typeList.add(SystemConfigCommonBean(it.id, it.typeName))
                     }
                 }
@@ -57,6 +64,11 @@ class SystemConfigViewModel : BaseViewModel() {
         emitUiState(showProgress = true)
         launchOnUI {
             when (pageType) {
+                //插入到家庭成员数据表
+                "0" -> {
+                    AppDataBase.instance.getFamilyMemberDao().insert(FamilyMember(null, type.value))
+                    emitUiState(addSuccess = true)
+                }
                 //插入到账户类型数据表
                 "1" -> {
                     AppDataBase.instance.getCountTypeDao().insert(CountType(null, type.value))
@@ -64,23 +76,28 @@ class SystemConfigViewModel : BaseViewModel() {
                 }
                 //插入到消费类型数据表获取
                 "2" -> {
-                    AppDataBase.instance.getConsumptionDao().insert(Consumption(null, type.value))
+                    AppDataBase.instance.getConsumptionTypeDao().insert(ConsumptionType(null, type.value))
                     emitUiState(addSuccess = true)
                 }
                 //插入到收入类型数据表获取
                 "3" -> {
-                    AppDataBase.instance.getIncomeDao().insert(Income(null, type.value))
+                    AppDataBase.instance.getIncomeTypeDao().insert(IncomeType(null, type.value))
                     emitUiState(addSuccess = true)
                 }
             }
         }
     }
 
-    //从数据库删除类型数据
+    //从数据库删除数据
     fun deleteType(id: Int) {
         emitUiState(showProgress = true)
         launchOnUI {
             when (pageType) {
+                //家庭成员
+                "0" -> {
+                    AppDataBase.instance.getFamilyMemberDao().delete(FamilyMember(id))
+                    emitUiState(deleteSuccess = true)
+                }
                 //账户类型
                 "1" -> {
                     AppDataBase.instance.getCountTypeDao().delete(CountType(id))
@@ -88,12 +105,12 @@ class SystemConfigViewModel : BaseViewModel() {
                 }
                 //消费类型
                 "2" -> {
-                    AppDataBase.instance.getConsumptionDao().delete(Consumption(id))
+                    AppDataBase.instance.getConsumptionTypeDao().delete(ConsumptionType(id))
                     emitUiState(deleteSuccess = true)
                 }
                 //收入类型
                 "3" -> {
-                    AppDataBase.instance.getIncomeDao().delete(Income(id))
+                    AppDataBase.instance.getIncomeTypeDao().delete(IncomeType(id))
                     emitUiState(deleteSuccess = true)
                 }
             }

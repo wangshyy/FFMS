@@ -39,6 +39,8 @@ class MineFragment : BaseVMFragment<FgMineBinding>(R.layout.fg_mine), View.OnCli
         when (v.id) {
             //修改密码
             R.id.tv_modify_pwd -> startKtxActivity<ModifyPasswordActivity>()
+            //家庭成员
+            R.id.tv_family_member -> startKtxActivity<SystemConfigCommonActivity>(value = ("pageType" to "0"))
             //账号类型
             R.id.tv_count_type -> startKtxActivity<SystemConfigCommonActivity>(value = ("pageType" to "1"))
             //消费类型
