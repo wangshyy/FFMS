@@ -96,4 +96,7 @@ dependencies {
 
     //SwipeRecyclerView
     implementation 'com.tubb.smrv:swipemenu-recyclerview:5.4.8'
+
+    //live-event-bus Android消息总线
+    implementation 'io.github.jeremyliao:live-event-bus-x:1.8.0'
 }

@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.View
 import android.widget.TimePicker
 import com.gyf.immersionbar.ktx.immersionBar
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopupext.listener.TimePickerListener
 import com.lxj.xpopupext.popup.TimePickerPopup
@@ -64,7 +65,11 @@ class AddIncomeExpenditureActivity : BaseVMActivity(), View.OnClickListener {
             it.showError?.let { error ->
                 toast(error)
             }
-            if (it.addSuccess){
+            it.addSuccess?.let { type->
+                //发送消息
+                LiveEventBus.get<String>("add_type")
+                    .post(type)
+
                 toast(getString(R.string.add_success))
                 finish()
             }

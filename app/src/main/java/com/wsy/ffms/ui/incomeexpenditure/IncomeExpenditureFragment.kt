@@ -23,7 +23,7 @@ class IncomeExpenditureFragment :
             title = Title(getString(R.string.income_expenditure), false) {}
             viewpager.adapter = IncExpPagerAdapter(this@IncomeExpenditureFragment)
             viewpager.offscreenPageLimit = 2
-            viewpager.isUserInputEnabled = false//true滑动 false禁止滑动
+            viewpager.isUserInputEnabled = true//是否可滑动切换
 
             //tabLayout与viewPager联动
             TabLayoutMediator(tabLayout, viewpager) { tab, position ->
@@ -42,6 +42,7 @@ class IncomeExpenditureFragment :
     }
 
     override fun initData() {
+
     }
 
     override fun startObserve() {

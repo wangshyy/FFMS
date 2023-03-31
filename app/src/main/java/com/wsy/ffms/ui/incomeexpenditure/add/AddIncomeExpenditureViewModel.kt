@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.wsy.ffms.R
 import com.wsy.ffms.core.base.BaseViewModel
 import com.wsy.ffms.db.AppDataBase
+import com.wsy.ffms.db.expenditure.Expenditure
 import com.wsy.ffms.db.income.Income
 import com.wsy.ffms.model.bean.SystemConfigCommonBean
 import com.wsy.ffms.util.TimeUnit
@@ -69,7 +70,18 @@ class AddIncomeExpenditureViewModel(val context: Context) : BaseViewModel() {
         }
         when (type.value) {
             //支出
-            "0" -> {}
+            "0" -> {
+                val expenditure = Expenditure(null)
+                val calendar = TimeUnit.parseDate(date.value!!, "yyyy-MM-dd")
+                expenditure.dateYear = calendar.get(Calendar.YEAR).toString()
+                //显示月份 (从0开始, 实际显示要加一)
+                expenditure.dateMonth = (calendar.get(Calendar.MONTH) + 1).toString()
+                expenditure.dateDay = calendar.get(Calendar.DAY_OF_MONTH).toString()
+                expenditure.amount = amount.value
+                expenditure.incomeType = eIType.value
+                AppDataBase.instance.getExpenditureDao().insert(expenditure)
+                emitUiState(addSuccess = "expenditure")
+            }
 
             //收入
             "1" -> {
@@ -77,15 +89,15 @@ class AddIncomeExpenditureViewModel(val context: Context) : BaseViewModel() {
                 val calendar = TimeUnit.parseDate(date.value!!, "yyyy-MM-dd")
                 income.dateYear = calendar.get(Calendar.YEAR).toString()
                 //显示月份 (从0开始, 实际显示要加一)
-                income.dateMonth = (calendar.get(Calendar.MONTH)+1).toString()
+                income.dateMonth = (calendar.get(Calendar.MONTH) + 1).toString()
                 income.dateDay = calendar.get(Calendar.DAY_OF_MONTH).toString()
                 income.amount = amount.value
                 income.familyMember = familyMember.value
                 income.incomeType = eIType.value
                 AppDataBase.instance.getIncomeDao().insert(income)
+                emitUiState(addSuccess = "income")
             }
         }
-        emitUiState(addSuccess = true)
     }
 
     private fun emitUiState(
@@ -93,9 +105,15 @@ class AddIncomeExpenditureViewModel(val context: Context) : BaseViewModel() {
         showError: String? = null,
         showSuccess: List<SystemConfigCommonBean>? = null,
         isFamilyMember: Boolean = false,
-        addSuccess: Boolean = false
+        addSuccess: String? = null,
     ) {
-        val uiState = AddIEUiModel(showProcess, showError, showSuccess, isFamilyMember, addSuccess)
+        val uiState = AddIEUiModel(
+            showProcess,
+            showError,
+            showSuccess,
+            isFamilyMember,
+            addSuccess,
+        )
         _uiState.value = uiState
     }
 
@@ -104,6 +122,6 @@ class AddIncomeExpenditureViewModel(val context: Context) : BaseViewModel() {
         val showError: String?,
         val showSuccess: List<SystemConfigCommonBean>?,
         val isFamilyMember: Boolean,
-        val addSuccess: Boolean
+        val addSuccess: String?,
     )
 }
