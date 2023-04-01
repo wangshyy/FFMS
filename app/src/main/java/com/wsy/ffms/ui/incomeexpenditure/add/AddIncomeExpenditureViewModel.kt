@@ -64,7 +64,11 @@ class AddIncomeExpenditureViewModel(val context: Context) : BaseViewModel() {
 
     //新增收入/支出数据
     fun add() {
-        if (date.value.isNullOrEmpty() || amount.value.isNullOrEmpty() || familyMember.value.isNullOrEmpty() || typeLabel.value.isNullOrEmpty()) {
+        if (date.value.isNullOrEmpty() || amount.value.isNullOrEmpty() || typeLabel.value.isNullOrEmpty()) {
+            emitUiState(showError = context.getString(R.string.add_hint))
+            return
+        }
+        if(type.value == "1" && familyMember.value.isNullOrEmpty()){
             emitUiState(showError = context.getString(R.string.add_hint))
             return
         }
@@ -78,7 +82,7 @@ class AddIncomeExpenditureViewModel(val context: Context) : BaseViewModel() {
                 expenditure.dateMonth = (calendar.get(Calendar.MONTH) + 1).toString()
                 expenditure.dateDay = calendar.get(Calendar.DAY_OF_MONTH).toString()
                 expenditure.amount = amount.value
-                expenditure.incomeType = eIType.value
+                expenditure.expenditureType = eIType.value
                 AppDataBase.instance.getExpenditureDao().insert(expenditure)
                 emitUiState(addSuccess = "expenditure")
             }

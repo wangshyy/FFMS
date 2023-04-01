@@ -11,11 +11,15 @@ import androidx.room.Query
  */
 @Dao
 interface ExpenditureDao {
-    //新增收入
+    //新增支出
     @Insert
     fun insert(expenditure: Expenditure)
 
-    //获取所有收入信息
+    //获取所有支出信息
     @Query("SELECT * FROM expenditure")
     fun queryAllExpenditure(): List<Expenditure>?
+
+    //根据年份获取所有支出信息
+    @Query("SELECT * FROM expenditure WHERE date_year == :year")
+    fun queryAllByYear(year: String): List<Expenditure>?
 }

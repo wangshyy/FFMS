@@ -54,11 +54,11 @@ class MainActivity : BaseVMActivity(), View.OnClickListener {
     //初始化状态栏
     private fun initStatusBar(ids: Int) {
         when (ids) {
-            R.id.nav_home, R.id.nav_data_statistics, R.id.nav_income_expenditure ->
+            R.id.nav_home, R.id.nav_income_expenditure ->
                 immersionBar {
                     statusBarDarkFont(true)
                 }
-            R.id.nav_mine ->
+            R.id.nav_mine, R.id.nav_data_statistics ->
                 immersionBar {
                     statusBarDarkFont(false)
                 }

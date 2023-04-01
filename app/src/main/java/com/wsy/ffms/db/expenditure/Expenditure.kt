@@ -15,6 +15,6 @@ data class Expenditure(
     @ColumnInfo(name = "date_year") var dateYear: String? = null,
     @ColumnInfo(name = "date_month") var dateMonth: String? = null,
     @ColumnInfo(name = "date_day") var dateDay: String? = null,
-    @ColumnInfo(name = "income_type") var incomeType: String? = null,
+    @ColumnInfo(name = "expenditure_type") var expenditureType: String? = null,
     var amount: String? = null
 )

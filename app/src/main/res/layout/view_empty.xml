@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/dp_10"
-    android:layout_marginHorizontal="@dimen/dp_10"
-    android:paddingBottom="@dimen/dp_10"
+    android:layout_margin="@dimen/dp_10"
     android:background="@drawable/shape_box_bg">
 
 

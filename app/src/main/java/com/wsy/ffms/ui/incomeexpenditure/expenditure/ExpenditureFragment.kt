@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wsy.ffms.R
-import com.wsy.ffms.adapter.IncomeListAdapter
+import com.wsy.ffms.adapter.ExpenditureAdapter
 import com.wsy.ffms.core.base.BaseVMFragment
 import com.wsy.ffms.databinding.FgExpenditureBinding
 import com.wsy.ffms.ui.incomeexpenditure.IncomeExpenditureViewModel
@@ -46,8 +46,15 @@ class ExpenditureFragment :BaseVMFragment<FgExpenditureBinding>(R.layout.fg_expe
     }
 
     override fun initData() {
+        mViewModel.getExpenditureList()
     }
 
     override fun startObserve() {
+        mViewModel.uiState.observe(this) {
+            it.showExpenditureList?.let { list ->
+                mExpenditureListAdapter.setList(list)
+            }
+            if (it.showExpenditureList?.size ?: 0 == 0) mExpenditureListAdapter.setEmptyView(mEmptyView)
+        }
     }
 }

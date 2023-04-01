@@ -72,4 +72,6 @@
     <string name="date_hint">请选择日期</string>
     <string name="select_hint">请选择</string>
     <string name="add_hint">请完善所有信息</string>
+    <string name="monthly">月度</string>
+    <string name="annual">年度</string>
 </resources>

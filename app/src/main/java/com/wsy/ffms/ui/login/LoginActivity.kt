@@ -5,11 +5,9 @@ import com.gyf.immersionbar.ktx.immersionBar
 import com.wsy.ffms.R
 import com.wsy.ffms.core.base.BaseVMActivity
 import com.wsy.ffms.core.etx.startKtxActivity
-import com.wsy.ffms.core.etx.startKtxActivityForResult
 import com.wsy.ffms.core.etx.toast
 import com.wsy.ffms.databinding.AcLoginBinding
 import com.wsy.ffms.db.AppDataBase
-import com.wsy.ffms.helper.UserHelper
 import com.wsy.ffms.ui.MainActivity
 import com.wsy.ffms.ui.register.RegisterActivity
 import com.wsy.ffms.widget.LoadingProgressDialog
@@ -70,7 +68,6 @@ class LoginActivity : BaseVMActivity(), View.OnClickListener {
                     "extra_title" to resources.getString(R.string.register_title)
                 )
             )
-
         }
     }
 }
