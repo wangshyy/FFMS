@@ -94,6 +94,15 @@ class DataStatisticsFragment :
                 mViewModel.expenditureAmount.value = amount.toString()
             }
         }
+        mViewModel.incomeList.observe(this) {
+            it?.let {
+                var amount = 0
+                it.forEach { income ->
+                    amount += income.amount?.toInt()!!
+                }
+                mViewModel.incomeAmount.value = amount.toString()
+            }
+        }
         mViewModel.date.observe(this) {
             it?.let {
                 mViewModel.queryAll()
