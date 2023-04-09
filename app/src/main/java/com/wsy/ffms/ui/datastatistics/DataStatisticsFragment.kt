@@ -2,6 +2,9 @@ package com.wsy.ffms.ui.datastatistics
 
 import android.graphics.Color
 import android.view.View
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.google.android.material.tabs.TabLayout
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopupext.listener.TimePickerListener
@@ -9,11 +12,14 @@ import com.lxj.xpopupext.popup.TimePickerPopup
 import com.wsy.ffms.R
 import com.wsy.ffms.core.base.BaseVMFragment
 import com.wsy.ffms.databinding.FgDataStatisticsBinding
+import com.wsy.ffms.db.AppDataBase
 import com.wsy.ffms.model.bean.Title
 import com.wsy.ffms.ui.MainActivity
+import lecho.lib.hellocharts.model.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 /**
  *  author : wsy
@@ -28,6 +34,7 @@ class DataStatisticsFragment :
     override fun initView() {
         MainActivity.setStatusBarHeight(binding.flStatusBar, requireActivity())
         mViewModel.type.value = "0"   //初始为月度
+        mViewModel.chartType.value = "0"   //初始为支出图表
         binding.apply {
             viewModel = mViewModel
             onClickListener = this@DataStatisticsFragment
@@ -36,15 +43,33 @@ class DataStatisticsFragment :
                 backgroundColor = requireContext().getColor(R.color.colorPrimary)
             }
 
-            tabLayout.addTab(binding.tabLayout.newTab().setText(getText(R.string.monthly)), 0)
-            tabLayout.addTab(binding.tabLayout.newTab().setText(getText(R.string.annual)), 1)
-            tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            tlDate.addTab(binding.tlDate.newTab().setText(getText(R.string.monthly)), 0)
+            tlDate.addTab(binding.tlDate.newTab().setText(getText(R.string.annual)), 1)
+            tlDate.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     when (tab.position) {
                         0 -> mViewModel.type.value = "0"
                         1 -> mViewModel.type.value = "1"
                     }
                     mViewModel.queryAll()
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+                }
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                }
+
+            })
+
+            tlType.addTab(binding.tlType.newTab().setText(getText(R.string.expenditure_analyse)), 0)
+            tlType.addTab(binding.tlType.newTab().setText(getText(R.string.income_analyse)), 1)
+            tlType.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    when (tab.position) {
+                        0 -> mViewModel.chartType.value = "0"
+                        1 -> mViewModel.chartType.value = "1"
+                    }
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -103,11 +128,52 @@ class DataStatisticsFragment :
                 mViewModel.incomeAmount.value = amount.toString()
             }
         }
+
         mViewModel.date.observe(this) {
             it?.let {
                 mViewModel.queryAll()
             }
         }
+
+        mViewModel.chartType.observe(this) {
+            it?.let {
+                showLineChart()
+            }
+        }
+
+    }
+
+    //显示线性表
+    private fun showLineChart() {
+        val dataIncomeList = mViewModel.queryHalfData()
+        val axisXValues: MutableList<AxisValue> = mutableListOf()
+        val pointValues: MutableList<PointValue> = mutableListOf()
+        dataIncomeList.forEachIndexed { index, pair ->
+            axisXValues.add(AxisValue(index.toFloat()).setLabel(pair.first + getString(R.string.month)))
+            pointValues.add(PointValue(index.toFloat(), pair.second))
+        }
+
+        val line =
+            Line(pointValues).setColor(requireContext().getColor(R.color.colorPrimary)) //折线的颜色
+        line.setHasLabelsOnlyForSelected(true);//点击数据坐标提示数据（设置了这个line.setHasLabels(true);就无效）
+        val lines: MutableList<Line> = ArrayList()
+        lines.add(line);
+        val data = LineChartData()
+        data.lines = lines
+
+        //坐标轴
+        val axisX = Axis() //X轴
+        axisX.values = axisXValues;  //填充X轴的坐标名称
+        axisX.textColor = requireContext().getColor(R.color.color_grey_515151)  //设置字体颜色
+        data.axisXBottom = axisX; //x 轴在底部
+
+        val axisY = Axis() //Y轴
+        axisY.textColor = requireContext().getColor(R.color.color_grey_515151)  //设置字体颜色
+        data.axisYLeft = axisY;  //Y轴设置在左边
+
+        binding.lcMonthly.isInteractive = false  //设置行为属性，支持缩放、滑动以及平移
+        binding.lcMonthly.lineChartData = data;
+        binding.lcMonthly.visibility = View.VISIBLE;
 
     }
 

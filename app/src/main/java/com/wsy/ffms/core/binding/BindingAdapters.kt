@@ -26,3 +26,12 @@ fun AppCompatTextView.initTextByType(status: String?) {
         else -> context.getString(R.string.consumption_type)
     }
 }
+
+@BindingAdapter("lineChartType")
+fun AppCompatTextView.initTextByLineChartType(status: String?) {
+    text = when (status) {
+        "0" -> context.getString(R.string.expenditure_trend)
+        "1" -> context.getString(R.string.income_trend)
+        else -> context.getString(R.string.expenditure_trend)
+    }
+}

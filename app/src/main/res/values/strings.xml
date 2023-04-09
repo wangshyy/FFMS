@@ -74,4 +74,10 @@
     <string name="add_hint">请完善所有信息</string>
     <string name="monthly">月度</string>
     <string name="annual">年度</string>
+    <string name="month">月</string>
+    <string name="year">年</string>
+    <string name="income_analyse">收入分析</string>
+    <string name="expenditure_analyse">支出分析</string>
+    <string name="income_trend">收入趋势</string>
+    <string name="expenditure_trend">支出趋势</string>
 </resources>

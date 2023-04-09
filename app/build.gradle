@@ -97,6 +97,10 @@ dependencies {
     //SwipeRecyclerView
     implementation 'com.tubb.smrv:swipemenu-recyclerview:5.4.8'
 
-    //live-event-bus Android消息总线
+    //Android消息总线
     implementation 'io.github.jeremyliao:live-event-bus-x:1.8.0'
+
+    //图表
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
 }
