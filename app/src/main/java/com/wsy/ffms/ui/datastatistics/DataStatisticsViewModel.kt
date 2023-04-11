@@ -124,15 +124,70 @@ class DataStatisticsViewModel : BaseViewModel() {
         } else {
             val listCurrent: MutableList<Pair<String, Float>> = mutableListOf()
             for (i in (currentDateMonth - 6 + 1)..currentDateMonth) {
-                val list = AppDataBase.instance.getIncomeDao()
-                    .queryAllByYearMonth(currentDateYear.toString(), i.toString())
-                var income = 0
-                list?.forEach {
-                    income += it.amount?.toInt()!!
+                val list = when (chartType.value) {
+                    //支出
+                    "0" -> {
+                        AppDataBase.instance.getExpenditureDao()
+                            .queryAllByYearMonth(currentDateYear.toString(), i.toString())
+                    }
+                    //收入
+                    else -> {
+                        AppDataBase.instance.getIncomeDao()
+                            .queryAllByYearMonth(currentDateYear.toString(), i.toString())
+                    }
                 }
-                listCurrent.add(Pair(i.toString(), income.toFloat()))
+                var amout = 0
+                list?.forEach {
+                    amout += when (chartType.value) {
+                        //支出
+                        "0" -> {
+                            (it as Expenditure).amount?.toInt()!!
+                        }
+                        //收入
+                        else -> {
+                            (it as Income).amount?.toInt()!!
+                        }
+                    }
+                }
+                listCurrent.add(Pair(i.toString(), amout.toFloat()))
             }
             return listCurrent
         }
+    }
+
+    //查询近六年的收入支出情况
+    fun querySixYearData(): List<Pair<String, Float>> {
+        val currentDateYear = Calendar.getInstance().get(Calendar.YEAR)
+        val sixYearDataList: MutableList<Pair<String, Float>> = mutableListOf()
+
+        for (i in (currentDateYear - 6)..currentDateYear) {
+            val list = when (chartType.value) {
+                //支出
+                "0" -> {
+                    AppDataBase.instance.getExpenditureDao()
+                        .queryAllByYear(currentDateYear.toString())
+                }
+                //收入
+                else -> {
+                    AppDataBase.instance.getIncomeDao()
+                        .queryAllByYear(currentDateYear.toString())
+                }
+            }
+            var amout = 0
+            list?.forEach {
+                amout += when (chartType.value) {
+                    //支出
+                    "0" -> {
+                        (it as Expenditure).amount?.toInt()!!
+                    }
+                    //收入
+                    else -> {
+                        (it as Income).amount?.toInt()!!
+                    }
+                }
+            }
+            sixYearDataList.add(Pair(currentDateYear.toString(), amout.toFloat()))
+        }
+        return sixYearDataList
     }
 }

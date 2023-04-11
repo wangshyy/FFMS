@@ -19,6 +19,10 @@ import lecho.lib.hellocharts.model.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import lecho.lib.hellocharts.model.SubcolumnValue
+
+
+
 
 
 /**
@@ -137,13 +141,19 @@ class DataStatisticsFragment :
 
         mViewModel.chartType.observe(this) {
             it?.let {
-                showLineChart()
+                if (mViewModel.type.value == "0") {
+                    //月度展示折线图
+                    showLineChart()
+                } else {
+                    //年度展示柱状图
+                    showColumnChart()
+                }
             }
         }
 
     }
 
-    //显示线性表
+    //显示折线图
     private fun showLineChart() {
         val dataIncomeList = mViewModel.queryHalfData()
         val axisXValues: MutableList<AxisValue> = mutableListOf()
@@ -174,6 +184,21 @@ class DataStatisticsFragment :
         binding.lcMonthly.isInteractive = false  //设置行为属性，支持缩放、滑动以及平移
         binding.lcMonthly.lineChartData = data;
         binding.lcMonthly.visibility = View.VISIBLE;
+
+    }
+
+    //显示柱状图
+    private fun showColumnChart() {
+        val sixYearDataList = mViewModel.querySixYearData()
+
+        val numColumns = sixYearDataList.size   //柱的个数
+        val numSubColumns = 1   //每个柱的子柱个数
+
+        //定义一个圆柱对象集合
+        var columns: List<Column> = listOf()
+        //子柱数据集合
+        var values: List<SubcolumnValue>? = null
+
 
     }
 
