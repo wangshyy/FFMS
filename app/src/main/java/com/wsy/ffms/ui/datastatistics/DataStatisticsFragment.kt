@@ -1,5 +1,6 @@
 package com.wsy.ffms.ui.datastatistics
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.View
 import com.github.mikephil.charting.data.Entry
@@ -15,14 +16,13 @@ import com.wsy.ffms.databinding.FgDataStatisticsBinding
 import com.wsy.ffms.db.AppDataBase
 import com.wsy.ffms.model.bean.Title
 import com.wsy.ffms.ui.MainActivity
+import lecho.lib.hellocharts.formatter.SimpleColumnChartValueFormatter
 import lecho.lib.hellocharts.model.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import lecho.lib.hellocharts.model.SubcolumnValue
-
-
-
+import lecho.lib.hellocharts.model.AxisValue
 
 
 /**
@@ -90,6 +90,7 @@ class DataStatisticsFragment :
 
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun startObserve() {
 
         mViewModel.type.observe(this) {
@@ -98,11 +99,13 @@ class DataStatisticsFragment :
                 "0" -> {
                     binding.isMonthly = true
                     mViewModel.datePattern.value = "yyyy年-MM月"
+                    mViewModel.chartType.value = mViewModel.chartType.value
                 }
                 //年度
                 "1" -> {
                     binding.isMonthly = false
                     mViewModel.datePattern.value = "yyyy年"
+                    mViewModel.chartType.value = mViewModel.chartType.value
                 }
             }
         }
@@ -156,6 +159,7 @@ class DataStatisticsFragment :
     //显示折线图
     private fun showLineChart() {
         val dataIncomeList = mViewModel.queryHalfData()
+        //x轴描述
         val axisXValues: MutableList<AxisValue> = mutableListOf()
         val pointValues: MutableList<PointValue> = mutableListOf()
         dataIncomeList.forEachIndexed { index, pair ->
@@ -181,27 +185,80 @@ class DataStatisticsFragment :
         axisY.textColor = requireContext().getColor(R.color.color_grey_515151)  //设置字体颜色
         data.axisYLeft = axisY;  //Y轴设置在左边
 
-        binding.lcMonthly.isInteractive = false  //设置行为属性，支持缩放、滑动以及平移
-        binding.lcMonthly.lineChartData = data;
-        binding.lcMonthly.visibility = View.VISIBLE;
-
+        binding.lcMonthly.apply {
+            lineChartData = data
+            isZoomEnabled = false     //是否可以缩放
+        }
     }
 
     //显示柱状图
     private fun showColumnChart() {
         val sixYearDataList = mViewModel.querySixYearData()
+        //x轴描述
+        val axisValues: MutableList<AxisValue> = mutableListOf()
+        sixYearDataList.forEachIndexed { index, pair ->
+            axisValues.add(AxisValue(index.toFloat()).setLabel(pair.first))   //设置x轴描述
+        }
 
         val numColumns = sixYearDataList.size   //柱的个数
         val numSubColumns = 1   //每个柱的子柱个数
 
+
         //定义一个圆柱对象集合
-        var columns: List<Column> = listOf()
-        //子柱数据集合
-        var values: List<SubcolumnValue>? = null
+        val columns: MutableList<Column> = mutableListOf()
 
+        for (i in 0 until numColumns) {
+            //子柱数据集合
+            val values: MutableList<SubcolumnValue> = mutableListOf()
+            for (j in 0 until numSubColumns) {
+                //为每一柱图添加颜色和数值
+                values.add(
+                    SubcolumnValue(
+                        sixYearDataList[i].second,
+                        requireContext().getColor(R.color.colorPrimary)
+                    )
+                )
+            }
 
+            //创建column对象
+            val column = Column(values)
+            //设置标注可以显示小数
+            val chartValueFormatter = SimpleColumnChartValueFormatter(1)    //小数位数
+            column.apply {
+                formatter = chartValueFormatter
+                setHasLabels(false)//是否有数据标注
+                setHasLabelsOnlyForSelected(true)//是否点击时显示标注
+            }
+            columns.add(column)
+        }
+
+        //坐标轴
+        val axisX = Axis() //X轴
+        axisX.apply {
+            setHasLines(false)  //是否显示网格线
+            textColor = requireContext().getColor(R.color.color_grey_515151)  //设置字体颜色
+            values = axisValues
+        }
+        val axisY = Axis() //Y轴
+        axisY.apply {
+            setHasLines(false)  //是否显示网格线
+            textColor = requireContext().getColor(R.color.color_grey_515151)  //设置字体颜色
+        }
+
+        val data = ColumnChartData(columns)
+        data.apply {
+            axisXBottom = axisX
+            axisYLeft = axisY
+        }
+
+        //给柱状图填充数据
+        binding.lcAnnual.apply {
+            isZoomEnabled = false     //是否可以缩放
+            columnChartData = data
+        }
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onClick(v: View) {
         when (v.id) {
             R.id.tv_date -> {

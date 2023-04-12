@@ -80,4 +80,5 @@
     <string name="expenditure_analyse">支出分析</string>
     <string name="income_trend">收入趋势</string>
     <string name="expenditure_trend">支出趋势</string>
+    <string name="rmb">元</string>
 </resources>

@@ -160,17 +160,17 @@ class DataStatisticsViewModel : BaseViewModel() {
         val currentDateYear = Calendar.getInstance().get(Calendar.YEAR)
         val sixYearDataList: MutableList<Pair<String, Float>> = mutableListOf()
 
-        for (i in (currentDateYear - 6)..currentDateYear) {
+        for (i in (currentDateYear - 5)..currentDateYear) {
             val list = when (chartType.value) {
                 //支出
                 "0" -> {
                     AppDataBase.instance.getExpenditureDao()
-                        .queryAllByYear(currentDateYear.toString())
+                        .queryAllByYear(i.toString())
                 }
                 //收入
                 else -> {
                     AppDataBase.instance.getIncomeDao()
-                        .queryAllByYear(currentDateYear.toString())
+                        .queryAllByYear(i.toString())
                 }
             }
             var amout = 0
@@ -186,7 +186,7 @@ class DataStatisticsViewModel : BaseViewModel() {
                     }
                 }
             }
-            sixYearDataList.add(Pair(currentDateYear.toString(), amout.toFloat()))
+            sixYearDataList.add(Pair(i.toString(), amout.toFloat()))
         }
         return sixYearDataList
     }
