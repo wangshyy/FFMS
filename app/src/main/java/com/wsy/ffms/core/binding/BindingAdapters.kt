@@ -35,3 +35,12 @@ fun AppCompatTextView.initTextByLineChartType(status: String?) {
         else -> context.getString(R.string.expenditure_trend)
     }
 }
+
+@BindingAdapter("horBarChartType")
+fun AppCompatTextView.initTextByHorBarChartType(status: String?) {
+    text = when (status) {
+        "0" -> context.getString(R.string.expenditure_rank)
+        "1" -> context.getString(R.string.income_rank)
+        else -> context.getString(R.string.expenditure_rank)
+    }
+}

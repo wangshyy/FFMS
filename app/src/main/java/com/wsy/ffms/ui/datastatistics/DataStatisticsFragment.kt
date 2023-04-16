@@ -203,7 +203,6 @@ class DataStatisticsFragment :
         val numColumns = sixYearDataList.size   //柱的个数
         val numSubColumns = 1   //每个柱的子柱个数
 
-
         //定义一个圆柱对象集合
         val columns: MutableList<Column> = mutableListOf()
 
