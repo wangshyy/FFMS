@@ -44,233 +44,247 @@
             app:layout_constraintTop_toBottomOf="@+id/fl_status_bar"
             app:title="@{title}" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_top"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:paddingHorizontal="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingBottom="@dimen/dp_20"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tl_date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent=".5"
-                app:tabIndicator="@drawable/shape_ds_date_indicator"
-                app:tabIndicatorColor="@color/white"
-                app:tabIndicatorFullWidth="false"
-                app:tabRippleColor="@color/transparent"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextAppearance="@style/MyTabLayoutStyle"
-                app:tabTextColor="@color/color_white_80FFFFFF" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp_10"
-                android:drawableEnd="@drawable/icon_arrow_down_white"
-                android:drawablePadding="@dimen/dp_6"
-                android:onClick="@{onClickListener}"
-                android:text="@{viewModel.date}"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_14"
-                app:layout_constraintBottom_toBottomOf="@+id/tl_date"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tl_date"
-                tools:text="2023-04" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_expenditure_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
-                android:text="@string/expenditure"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_14"
-                app:layout_constraintEnd_toStartOf="@+id/tv_income_title"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tl_date" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_expenditure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_5"
-                android:text="@{viewModel.expenditureAmount}"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_22"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/tv_expenditure_title"
-                app:layout_constraintStart_toStartOf="@+id/tv_expenditure_title"
-                app:layout_constraintTop_toBottomOf="@+id/tv_expenditure_title"
-                tools:text="2500" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_yuan1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_4"
-                android:text="@string/rmb"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_14"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_expenditure"
-                app:layout_constraintStart_toEndOf="@+id/tv_expenditure"
-                app:layout_constraintTop_toTopOf="@+id/tv_expenditure" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_income_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
-                android:text="@string/income"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_14"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tv_expenditure_title"
-                app:layout_constraintTop_toBottomOf="@+id/tl_date" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_income"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_5"
-                android:text="@{viewModel.incomeAmount}"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_22"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/tv_income_title"
-                app:layout_constraintStart_toStartOf="@+id/tv_income_title"
-                app:layout_constraintTop_toBottomOf="@+id/tv_income_title"
-                tools:text="12500" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_yuan2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_4"
-                android:text="@string/rmb"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_14"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_income"
-                app:layout_constraintStart_toEndOf="@+id/tv_income"
-                app:layout_constraintTop_toTopOf="@+id/tv_income" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tl_type"
-            android:layout_width="@dimen/dp_180"
-            android:layout_height="@dimen/dp_42"
-            android:layout_marginTop="@dimen/dp_10"
-            android:background="@drawable/shape_box_bg"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cl_top"
-            app:tabIndicator="@drawable/shape_ds_type_indicator"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabRippleColor="@color/transparent"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextAppearance="@style/MyTabLayoutStyle"
-            app:tabTextColor="@color/colorPrimary" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_line_chart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_10"
-            android:background="@drawable/shape_box_bg"
-            android:padding="@dimen/dp_10"
-            app:layout_constraintTop_toBottomOf="@+id/tl_type">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_trend"
-                lineChartType="@{viewModel.chartType}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_text"
-                android:textSize="@dimen/text_size_14"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/income_trend" />
-
-            <View
-                android:id="@+id/line_trend"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@color/color_activity_bg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_trend" />
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp_10">
 
-            <lecho.lib.hellocharts.view.LineChartView
-                android:id="@+id/lc_monthly"
-                visibleUnless='@{viewModel.type == "0"}'
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_240"
-                android:layout_marginTop="@dimen/dp_10"
-                android:paddingHorizontal="@dimen/dp_20"
-                android:paddingTop="@dimen/dp_20"
-                app:layout_constraintTop_toBottomOf="@+id/line_trend" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:paddingHorizontal="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_20"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <lecho.lib.hellocharts.view.ColumnChartView
-                android:id="@+id/lc_annual"
-                visibleUnless='@{viewModel.type == "1"}'
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_240"
-                android:layout_marginTop="@dimen/dp_10"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/dp_20"
-                android:paddingTop="@dimen/dp_20"
-                app:layout_constraintTop_toBottomOf="@+id/line_trend" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tl_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent=".5"
+                        app:tabIndicator="@drawable/shape_ds_date_indicator"
+                        app:tabIndicatorColor="@color/white"
+                        app:tabIndicatorFullWidth="false"
+                        app:tabRippleColor="@color/transparent"
+                        app:tabSelectedTextColor="@color/white"
+                        app:tabTextAppearance="@style/MyTabLayoutStyle"
+                        app:tabTextColor="@color/color_white_80FFFFFF" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_hor_chart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_10"
-            android:background="@drawable/shape_box_bg"
-            android:padding="@dimen/dp_10"
-            app:layout_constraintTop_toBottomOf="@+id/cl_line_chart">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:drawableEnd="@drawable/icon_arrow_down_white"
+                        android:drawablePadding="@dimen/dp_6"
+                        android:onClick="@{onClickListener}"
+                        android:text="@{viewModel.date}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_14"
+                        app:layout_constraintBottom_toBottomOf="@+id/tl_date"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tl_date"
+                        tools:text="2023-04" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_rank"
-                horBarChartType="@{viewModel.chartType}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_text"
-                android:textSize="@dimen/text_size_14"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/income_rank" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_expenditure_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:text="@string/expenditure"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_14"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_income_title"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tl_date" />
 
-            <View
-                android:id="@+id/line_rank"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="@color/color_activity_bg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_rank" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_expenditure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:text="@{viewModel.expenditureAmount}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_22"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_expenditure_title"
+                        app:layout_constraintStart_toStartOf="@+id/tv_expenditure_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_expenditure_title"
+                        tools:text="2500" />
 
-            <com.github.mikephil.charting.charts.HorizontalBarChart
-                android:id="@+id/hbc_rank"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
-                app:layout_constraintTop_toBottomOf="@+id/line_rank" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_yuan1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_4"
+                        android:text="@string/rmb"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_14"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_expenditure"
+                        app:layout_constraintStart_toEndOf="@+id/tv_expenditure"
+                        app:layout_constraintTop_toTopOf="@+id/tv_expenditure" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_income_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_20"
+                        android:text="@string/income"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tv_expenditure_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tl_date" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_income"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:text="@{viewModel.incomeAmount}"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_22"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_income_title"
+                        app:layout_constraintStart_toStartOf="@+id/tv_income_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_income_title"
+                        tools:text="12500" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_yuan2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_4"
+                        android:text="@string/rmb"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_14"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_income"
+                        app:layout_constraintStart_toEndOf="@+id/tv_income"
+                        app:layout_constraintTop_toTopOf="@+id/tv_income" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tl_type"
+                    android:layout_width="@dimen/dp_180"
+                    android:layout_height="@dimen/dp_42"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/shape_box_bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cl_top"
+                    app:tabIndicator="@drawable/shape_ds_type_indicator"
+                    app:tabIndicatorColor="@color/colorPrimary"
+                    app:tabRippleColor="@color/transparent"
+                    app:tabSelectedTextColor="@color/white"
+                    app:tabTextAppearance="@style/MyTabLayoutStyle"
+                    app:tabTextColor="@color/colorPrimary" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_line_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_10"
+                    android:background="@drawable/shape_box_bg"
+                    android:padding="@dimen/dp_10"
+                    app:layout_constraintTop_toBottomOf="@+id/tl_type">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_trend"
+                        lineChartType="@{viewModel.chartType}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_text"
+                        android:textSize="@dimen/text_size_14"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/income_trend" />
+
+                    <View
+                        android:id="@+id/line_trend"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@color/color_activity_bg"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_trend" />
+
+                    <lecho.lib.hellocharts.view.LineChartView
+                        android:id="@+id/lc_monthly"
+                        visibleUnless='@{viewModel.type == "0"}'
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_240"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:paddingHorizontal="@dimen/dp_20"
+                        android:paddingTop="@dimen/dp_20"
+                        app:layout_constraintTop_toBottomOf="@+id/line_trend" />
+
+                    <lecho.lib.hellocharts.view.ColumnChartView
+                        android:id="@+id/lc_annual"
+                        visibleUnless='@{viewModel.type == "1"}'
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_240"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="@dimen/dp_20"
+                        android:paddingTop="@dimen/dp_20"
+                        app:layout_constraintTop_toBottomOf="@+id/line_trend" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_hor_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_10"
+                    android:background="@drawable/shape_box_bg"
+                    android:padding="@dimen/dp_10"
+                    app:layout_constraintTop_toBottomOf="@+id/cl_line_chart">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_rank"
+                        horBarChartType="@{viewModel.chartType}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_text"
+                        android:textSize="@dimen/text_size_14"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/income_rank" />
+
+                    <View
+                        android:id="@+id/line_rank"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@color/color_activity_bg"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_rank" />
+
+                    <com.github.mikephil.charting.charts.HorizontalBarChart
+                        android:id="@+id/hbc_rank"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_200"
+                        android:layout_marginTop="@dimen/dp_10"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/line_rank" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -3,9 +3,9 @@ package com.wsy.ffms.ui.datastatistics
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.View
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.tabs.TabLayout
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopupext.listener.TimePickerListener
@@ -13,7 +13,6 @@ import com.lxj.xpopupext.popup.TimePickerPopup
 import com.wsy.ffms.R
 import com.wsy.ffms.core.base.BaseVMFragment
 import com.wsy.ffms.databinding.FgDataStatisticsBinding
-import com.wsy.ffms.db.AppDataBase
 import com.wsy.ffms.model.bean.Title
 import com.wsy.ffms.ui.MainActivity
 import lecho.lib.hellocharts.formatter.SimpleColumnChartValueFormatter
@@ -21,8 +20,6 @@ import lecho.lib.hellocharts.model.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import lecho.lib.hellocharts.model.SubcolumnValue
-import lecho.lib.hellocharts.model.AxisValue
 
 
 /**
@@ -139,6 +136,8 @@ class DataStatisticsFragment :
         mViewModel.date.observe(this) {
             it?.let {
                 mViewModel.queryAll()
+                //更新图表
+                mViewModel.chartType.value = mViewModel.chartType.value
             }
         }
 
@@ -151,12 +150,23 @@ class DataStatisticsFragment :
                     //年度展示柱状图
                     showColumnChart()
                 }
+                showHorColumnChart()
             }
         }
 
+
+        //观察rank数量
+        mViewModel.rankSize.observe(this) {
+            it?.let {
+                //根据rank数量来改变排行板水平柱状图的高度
+                val layoutParams = binding.hbcRank.layoutParams
+                layoutParams.height = resources.getDimension(R.dimen.dp_40).toInt() * it.toInt()
+                binding.hbcRank.layoutParams = layoutParams
+            }
+        }
     }
 
-    //显示折线图
+    //显示趋势折线图
     private fun showLineChart() {
         val dataIncomeList = mViewModel.queryHalfData()
         //x轴描述
@@ -191,7 +201,7 @@ class DataStatisticsFragment :
         }
     }
 
-    //显示柱状图
+    //显示趋势柱状图
     private fun showColumnChart() {
         val sixYearDataList = mViewModel.querySixYearData()
         //x轴描述
@@ -254,6 +264,62 @@ class DataStatisticsFragment :
         binding.lcAnnual.apply {
             isZoomEnabled = false     //是否可以缩放
             columnChartData = data
+        }
+    }
+
+    //显示排行柱状图
+    private fun showHorColumnChart() {
+
+        val list = mViewModel.queryRankMonthly()
+
+        val typeNameList = mutableListOf<String>()
+        val barEntryList = mutableListOf<BarEntry>()
+        list.forEach {
+            typeNameList.add(it.first)
+            barEntryList.add(it.second)
+        }
+        var barDataSet = BarDataSet(barEntryList, "")
+        barDataSet.color = requireContext().getColor(R.color.colorPrimary)
+        barDataSet.isHighlightEnabled = false   //是否可点击
+        var barData = BarData(barDataSet)
+        barData.barWidth = .4F  // 设置柱子的宽度
+        barData.setValueTextSize(12F)   //柱子文字大小
+        binding.hbcRank.apply {
+            data = barData
+            description.isEnabled = false   //不显示右下角描述内容
+            axisLeft.isEnabled = false  //不显示left y轴
+            axisRight.isEnabled = false  //不显示right y轴
+            legend.isEnabled = false
+            setScaleEnabled(false)
+
+            //坐标轴
+            //x轴
+            xAxis.apply {
+                position = XAxis.XAxisPosition.BOTTOM   //x轴位置，默认在右边
+                //不显示x，y轴线
+                setDrawAxisLine(false)
+                gridColor = Color.TRANSPARENT
+                textSize = 12F
+                textColor = requireContext().getColor(R.color.color_grey_515151)  //设置字体颜色
+                granularity = 1F
+                labelCount = typeNameList.size
+                //文本
+                valueFormatter = object : ValueFormatter() {
+                    override fun getFormattedValue(value: Float): String {
+                        return try {
+                            typeNameList[value.toInt()]
+                        } catch (e: Exception) {
+                            ""
+                        }
+                    }
+                }
+            }
+            //y轴
+            axisRight.apply {
+                textSize = 12F
+                textColor = requireContext().getColor(R.color.color_grey_515151)  //设置字体颜色
+            }
+            invalidate()
         }
     }
 

@@ -1,10 +1,14 @@
 package com.wsy.ffms.ui.datastatistics
 
 import androidx.lifecycle.MutableLiveData
+import com.github.mikephil.charting.data.BarEntry
 import com.wsy.ffms.core.base.BaseViewModel
 import com.wsy.ffms.db.AppDataBase
+import com.wsy.ffms.db.consumptiontype.ConsumptionType
+import com.wsy.ffms.db.counttype.CountType
 import com.wsy.ffms.db.expenditure.Expenditure
 import com.wsy.ffms.db.income.Income
+import com.wsy.ffms.db.incometype.IncomeType
 import com.wsy.ffms.util.TimeUnit
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,6 +30,8 @@ class DataStatisticsViewModel : BaseViewModel() {
 
     val incomeList = MutableLiveData<List<Income>>()  //收入列表
     val incomeAmount = MutableLiveData<String>()   //收入总额
+
+    val rankSize = MutableLiveData<String>()    //排行个数
 
     //获取支出列表
     fun queryAll() {
@@ -58,8 +64,10 @@ class DataStatisticsViewModel : BaseViewModel() {
     //查询半年内的收入支出情况
     fun queryHalfData(): List<Pair<String, Float>> {
 
-        val currentDateYear = Calendar.getInstance().get(Calendar.YEAR)
-        val currentDateMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
+        val currentDateYear =
+            TimeUnit.parseDate(date.value!!, datePattern.value!!).get(Calendar.YEAR)
+        val currentDateMonth =
+            TimeUnit.parseDate(date.value!!, datePattern.value!!).get(Calendar.MONTH) + 1
         //当前年查询数据个数会存在小于6的情况，此时需要查询前一年的数据
         if (currentDateMonth < 6) {
             val listCurrent: MutableList<Pair<String, Float>> = mutableListOf()
@@ -77,9 +85,9 @@ class DataStatisticsViewModel : BaseViewModel() {
                             .queryAllByYearMonth((currentDateYear - 1).toString(), i.toString())
                     }
                 }
-                var amout = 0
+                var amount = 0
                 list?.forEach {
-                    amout += when (chartType.value) {
+                    amount += when (chartType.value) {
                         //支出
                         "0" -> {
                             (it as Expenditure).amount?.toInt()!!
@@ -90,7 +98,7 @@ class DataStatisticsViewModel : BaseViewModel() {
                         }
                     }
                 }
-                listCurrent.add(Pair(i.toString(), amout.toFloat()))
+                listCurrent.add(Pair(i.toString(), amount.toFloat()))
             }
             for (i in 1..currentDateMonth) {
                 val list = when (chartType.value) {
@@ -105,9 +113,9 @@ class DataStatisticsViewModel : BaseViewModel() {
                             .queryAllByYearMonth(currentDateYear.toString(), i.toString())
                     }
                 }
-                var amout = 0
+                var amount = 0
                 list?.forEach {
-                    amout += when (chartType.value) {
+                    amount += when (chartType.value) {
                         //支出
                         "0" -> {
                             (it as Expenditure).amount?.toInt()!!
@@ -118,7 +126,7 @@ class DataStatisticsViewModel : BaseViewModel() {
                         }
                     }
                 }
-                listCurrent.add(Pair(i.toString(), amout.toFloat()))
+                listCurrent.add(Pair(i.toString(), amount.toFloat()))
             }
             return listCurrent
         } else {
@@ -136,9 +144,9 @@ class DataStatisticsViewModel : BaseViewModel() {
                             .queryAllByYearMonth(currentDateYear.toString(), i.toString())
                     }
                 }
-                var amout = 0
+                var amount = 0
                 list?.forEach {
-                    amout += when (chartType.value) {
+                    amount += when (chartType.value) {
                         //支出
                         "0" -> {
                             (it as Expenditure).amount?.toInt()!!
@@ -149,7 +157,7 @@ class DataStatisticsViewModel : BaseViewModel() {
                         }
                     }
                 }
-                listCurrent.add(Pair(i.toString(), amout.toFloat()))
+                listCurrent.add(Pair(i.toString(), amount.toFloat()))
             }
             return listCurrent
         }
@@ -157,7 +165,8 @@ class DataStatisticsViewModel : BaseViewModel() {
 
     //查询近六年的收入支出情况
     fun querySixYearData(): List<Pair<String, Float>> {
-        val currentDateYear = Calendar.getInstance().get(Calendar.YEAR)
+        val currentDateYear =
+            TimeUnit.parseDate(date.value!!, datePattern.value!!).get(Calendar.YEAR)
         val sixYearDataList: MutableList<Pair<String, Float>> = mutableListOf()
 
         for (i in (currentDateYear - 5)..currentDateYear) {
@@ -173,9 +182,9 @@ class DataStatisticsViewModel : BaseViewModel() {
                         .queryAllByYear(i.toString())
                 }
             }
-            var amout = 0
+            var amount = 0
             list?.forEach {
-                amout += when (chartType.value) {
+                amount += when (chartType.value) {
                     //支出
                     "0" -> {
                         (it as Expenditure).amount?.toInt()!!
@@ -186,8 +195,62 @@ class DataStatisticsViewModel : BaseViewModel() {
                     }
                 }
             }
-            sixYearDataList.add(Pair(i.toString(), amout.toFloat()))
+            sixYearDataList.add(Pair(i.toString(), amount.toFloat()))
         }
         return sixYearDataList
+    }
+
+    //查询本月度支出收入排行
+    fun queryRankMonthly(): List<Pair<String, BarEntry>> {
+        val currentDateYear =
+            TimeUnit.parseDate(date.value!!, datePattern.value!!).get(Calendar.YEAR).toString()
+        val currentDateMonth =
+            (TimeUnit.parseDate(date.value!!, datePattern.value!!)
+                .get(Calendar.MONTH) + 1).toString()
+
+        val rankList: MutableList<Pair<String, BarEntry>> = mutableListOf()
+
+        val typeList =
+            if (chartType.value == "0")
+            //支出
+                AppDataBase.instance.getConsumptionTypeDao().queryAllConsumptionType()
+            else
+            //收入
+                AppDataBase.instance.getIncomeTypeDao().queryAllIncomeType()
+        val list: MutableList<Pair<String, Int>> = mutableListOf()
+        typeList?.let {
+            it.forEachIndexed { _, type ->
+                val amountList =
+                    if (chartType.value == "0")
+                        AppDataBase.instance.getExpenditureDao().queryAllByMonthAndType(
+                            currentDateYear,
+                            currentDateMonth,
+                            (type as ConsumptionType).typeName.toString()
+                        )
+                    else
+                        AppDataBase.instance.getIncomeDao().queryAllByMonthAndType(
+                        currentDateYear,
+                        currentDateMonth,
+                        (type as IncomeType).typeName.toString()
+                    )
+                var amount = 0
+                amountList?.forEach { any ->
+                    amount += if (chartType.value == "0") (any as Expenditure).amount?.toInt()!!
+                    else (any as Income).amount?.toInt()!!
+                }
+                list.add(
+                    Pair(
+                        if (chartType.value == "0") (type as ConsumptionType).typeName!! else (type as IncomeType).typeName!!,
+                        amount
+                    )
+                )
+            }
+        }
+        rankSize.value = list.size.toString()
+        list.sortBy { pair -> pair.second }
+        list.forEachIndexed { index, pair ->
+            rankList.add(Pair(pair.first, BarEntry(index.toFloat(), pair.second.toFloat())))
+        }
+        return rankList
     }
 }
