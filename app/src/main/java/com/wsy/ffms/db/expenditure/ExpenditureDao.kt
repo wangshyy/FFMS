@@ -28,6 +28,10 @@ interface ExpenditureDao {
     @Query("SELECT * FROM expenditure WHERE date_year == :year AND date_month == :month")
     fun queryAllByYearMonth(year: String, month: String): List<Expenditure>?
 
+    //根据年份、支出类型获取所有支出信息
+    @Query("SELECT * FROM expenditure WHERE date_year == :year  AND expenditure_type==:type")
+    fun queryAllByYearAndType(year: String,  type: String): List<Expenditure>?
+
     //根据月份、支出类型获取所有支出信息
     @Query("SELECT * FROM expenditure WHERE date_year == :year AND date_month == :month AND expenditure_type==:type")
     fun queryAllByMonthAndType(year: String, month: String, type: String): List<Expenditure>?

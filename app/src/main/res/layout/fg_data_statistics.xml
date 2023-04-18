@@ -256,7 +256,8 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_rank"
-                        horBarChartType="@{viewModel.chartType}"
+                        lineChartType="@{viewModel.chartType}"
+                        type="@{viewModel.type}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/color_text"
@@ -276,13 +277,50 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_rank" />
 
-                    <com.github.mikephil.charting.charts.HorizontalBarChart
-                        android:id="@+id/hbc_rank"
+                    <lecho.lib.hellocharts.view.ColumnChartView
+                        android:id="@+id/cc_rank"
+                        visibleUnless='@{viewModel.type == "0"}'
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_200"
+                        android:layout_height="@dimen/dp_240"
                         android:layout_marginTop="@dimen/dp_10"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:paddingHorizontal="@dimen/dp_20"
+                        android:paddingTop="@dimen/dp_20"
                         app:layout_constraintTop_toBottomOf="@+id/line_rank" />
+
+                    <lecho.lib.hellocharts.view.PieChartView
+                        android:id="@+id/pc_rank"
+                        visibleUnless='@{viewModel.type == "1"}'
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_240"
+                        android:layout_marginTop="@dimen/dp_10"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/line_rank"
+                        app:layout_constraintWidth_percent=".8" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/iv_select_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.centerType}"
+                        android:textColor="@color/color_text"
+                        android:textSize="@dimen/text_size_14"
+                        app:layout_constraintBottom_toTopOf="@+id/iv_select_type_percent"
+                        app:layout_constraintEnd_toEndOf="@+id/pc_rank"
+                        app:layout_constraintStart_toStartOf="@+id/pc_rank"
+                        app:layout_constraintTop_toTopOf="@+id/pc_rank"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/iv_select_type_percent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.centerTypeValue}"
+                        android:textColor="@color/color_text"
+                        android:textSize="@dimen/text_size_12"
+                        app:layout_constraintBottom_toBottomOf="@+id/pc_rank"
+                        app:layout_constraintEnd_toEndOf="@+id/pc_rank"
+                        app:layout_constraintStart_toStartOf="@+id/pc_rank"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_select_type" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

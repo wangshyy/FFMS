@@ -16,6 +16,8 @@ import com.wsy.ffms.databinding.FgDataStatisticsBinding
 import com.wsy.ffms.model.bean.Title
 import com.wsy.ffms.ui.MainActivity
 import lecho.lib.hellocharts.formatter.SimpleColumnChartValueFormatter
+import lecho.lib.hellocharts.listener.ColumnChartOnValueSelectListener
+import lecho.lib.hellocharts.listener.PieChartOnValueSelectListener
 import lecho.lib.hellocharts.model.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -80,6 +82,7 @@ class DataStatisticsFragment :
                 }
 
             })
+
         }
     }
 
@@ -144,26 +147,17 @@ class DataStatisticsFragment :
         mViewModel.chartType.observe(this) {
             it?.let {
                 if (mViewModel.type.value == "0") {
-                    //月度展示折线图
+                    //月度展示趋势折线图、排行柱状图
                     showLineChart()
+                    showRankColumnChart()
                 } else {
-                    //年度展示柱状图
+                    //年度展示趋势柱状图、占比饼状图
                     showColumnChart()
+                    showRankPieChart()
                 }
-                showHorColumnChart()
             }
         }
 
-
-        //观察rank数量
-        mViewModel.rankSize.observe(this) {
-            it?.let {
-                //根据rank数量来改变排行板水平柱状图的高度
-                val layoutParams = binding.hbcRank.layoutParams
-                layoutParams.height = resources.getDimension(R.dimen.dp_40).toInt() * it.toInt()
-                binding.hbcRank.layoutParams = layoutParams
-            }
-        }
     }
 
     //显示趋势折线图
@@ -268,60 +262,121 @@ class DataStatisticsFragment :
     }
 
     //显示排行柱状图
-    private fun showHorColumnChart() {
+    private fun showRankColumnChart() {
 
         val list = mViewModel.queryRankMonthly()
-
-        val typeNameList = mutableListOf<String>()
-        val barEntryList = mutableListOf<BarEntry>()
-        list.forEach {
-            typeNameList.add(it.first)
-            barEntryList.add(it.second)
+        //x轴描述
+        val axisValues: MutableList<AxisValue> = mutableListOf()
+        list.forEachIndexed { index, pair ->
+            axisValues.add(AxisValue(index.toFloat()).setLabel(pair.first))   //设置x轴描述
         }
-        var barDataSet = BarDataSet(barEntryList, "")
-        barDataSet.color = requireContext().getColor(R.color.colorPrimary)
-        barDataSet.isHighlightEnabled = false   //是否可点击
-        var barData = BarData(barDataSet)
-        barData.barWidth = .4F  // 设置柱子的宽度
-        barData.setValueTextSize(12F)   //柱子文字大小
-        binding.hbcRank.apply {
-            data = barData
-            description.isEnabled = false   //不显示右下角描述内容
-            axisLeft.isEnabled = false  //不显示left y轴
-            axisRight.isEnabled = false  //不显示right y轴
-            legend.isEnabled = false
-            setScaleEnabled(false)
 
-            //坐标轴
-            //x轴
-            xAxis.apply {
-                position = XAxis.XAxisPosition.BOTTOM   //x轴位置，默认在右边
-                //不显示x，y轴线
-                setDrawAxisLine(false)
-                gridColor = Color.TRANSPARENT
-                textSize = 12F
-                textColor = requireContext().getColor(R.color.color_grey_515151)  //设置字体颜色
-                granularity = 1F
-                labelCount = typeNameList.size
-                //文本
-                valueFormatter = object : ValueFormatter() {
-                    override fun getFormattedValue(value: Float): String {
-                        return try {
-                            typeNameList[value.toInt()]
-                        } catch (e: Exception) {
-                            ""
-                        }
-                    }
-                }
+        val numColumns = list.size   //柱的个数
+        val numSubColumns = 1   //每个柱的子柱个数
+
+        //定义一个圆柱对象集合
+        val columns: MutableList<Column> = mutableListOf()
+
+        for (i in 0 until numColumns) {
+            //子柱数据集合
+            val values: MutableList<SubcolumnValue> = mutableListOf()
+            for (j in 0 until numSubColumns) {
+                //为每一柱图添加颜色和数值
+                values.add(
+                    SubcolumnValue(
+                        list[i].second,
+                        requireContext().getColor(R.color.colorPrimary)
+                    )
+                )
             }
-            //y轴
-            axisRight.apply {
-                textSize = 12F
-                textColor = requireContext().getColor(R.color.color_grey_515151)  //设置字体颜色
+
+            //创建column对象
+            val column = Column(values)
+            //设置标注可以显示小数
+            val chartValueFormatter = SimpleColumnChartValueFormatter(1)    //小数位数
+            column.apply {
+                formatter = chartValueFormatter
+                setHasLabels(false)//是否有数据标注
+                setHasLabelsOnlyForSelected(true)//是否点击时显示标注
             }
-            invalidate()
+            columns.add(column)
+        }
+
+        //坐标轴
+        val axisX = Axis() //X轴
+        axisX.apply {
+            setHasLines(false)  //是否显示网格线
+            textColor = requireContext().getColor(R.color.color_grey_515151)  //设置字体颜色
+            values = axisValues
+        }
+        val axisY = Axis() //Y轴
+        axisY.apply {
+            setHasLines(false)  //是否显示网格线
+            textColor = requireContext().getColor(R.color.color_grey_515151)  //设置字体颜色
+        }
+
+        val data = ColumnChartData(columns)
+        data.apply {
+            axisXBottom = axisX
+            axisYLeft = axisY
+            fillRatio = .5F
+        }
+
+        //给柱状图填充数据
+        binding.ccRank.apply {
+            isZoomEnabled = false     //是否可以缩放
+            columnChartData = data
         }
     }
+
+    //显示排行饼状图
+    private fun showRankPieChart() {
+        val list = mViewModel.queryRankAnnual()
+        var allAmount = 0F  //总金额
+        val colorList = arrayListOf(
+            Color.parseColor("#FF3333"),
+            requireActivity().getColor(R.color.colorPrimary),
+            Color.parseColor("#00CC66"),
+            Color.parseColor("#FFFF33"),
+            Color.parseColor("#A0A0A0")
+        )
+        val sliceValues = mutableListOf<SliceValue>()
+        list.forEachIndexed { index, pair ->
+            sliceValues.add(SliceValue(pair.second, colorList[index]))
+            allAmount += pair.second
+        }
+
+        val pieCharData = PieChartData()
+        pieCharData.apply {
+            setHasLabels(true)  //是否显示文本
+            setHasLabelsOnlyForSelected(false)  //不用点击显示占的百分比
+            setHasLabelsOutside(false)  //占的百分比是否显示在饼图外面
+            setHasCenterCircle(true)    //是否是环形显示
+            values = sliceValues    //填充数据
+            centerCircleColor = Color.WHITE //设置环形中间的颜色
+            centerCircleScale = 0.5f    //设置环形的大小级别
+        }
+        binding.pcRank.apply {
+            pieChartData = pieCharData
+            isValueSelectionEnabled = true    //选择饼图某一块变大
+            alpha = 0.9f   //设置透明度
+            circleFillRatio = 1f    //设置饼图大小
+            onValueTouchListener = object : PieChartOnValueSelectListener {
+                override fun onValueDeselected() {
+                    mViewModel.centerType.value = ""
+                    mViewModel.centerTypeValue.value = ""
+                }
+
+                override fun onValueSelected(arcIndex: Int, value: SliceValue?) {
+                    mViewModel.centerType.value = list[arcIndex].first
+                    mViewModel.centerTypeValue.value =
+                        "${"%.1f".format((list[arcIndex].second / allAmount) * 100)}%"
+                }
+
+            }
+        }
+    }
+
 
     @SuppressLint("SimpleDateFormat")
     override fun onClick(v: View) {

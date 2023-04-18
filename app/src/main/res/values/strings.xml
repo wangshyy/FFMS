@@ -82,5 +82,7 @@
     <string name="expenditure_trend">支出趋势</string>
     <string name="income_rank">收入排行</string>
     <string name="expenditure_rank">支出排行</string>
+    <string name="income_percentage">收入占比</string>
+    <string name="expenditure_percentage">支出占比</string>
     <string name="rmb">元</string>
 </resources>

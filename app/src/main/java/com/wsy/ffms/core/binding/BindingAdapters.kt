@@ -36,11 +36,23 @@ fun AppCompatTextView.initTextByLineChartType(status: String?) {
     }
 }
 
-@BindingAdapter("horBarChartType")
-fun AppCompatTextView.initTextByHorBarChartType(status: String?) {
-    text = when (status) {
-        "0" -> context.getString(R.string.expenditure_rank)
-        "1" -> context.getString(R.string.income_rank)
-        else -> context.getString(R.string.expenditure_rank)
+@BindingAdapter("type", "lineChartType")
+fun AppCompatTextView.initTextByHorBarChartType(type: String?, lineChartType: String?) {
+    text = when (type) {
+        "0" -> {
+            when (lineChartType) {
+                "0" -> context.getString(R.string.expenditure_rank)
+                "1" -> context.getString(R.string.income_rank)
+                else -> context.getString(R.string.expenditure_rank)
+            }
+        }
+        "1" -> {
+            when (lineChartType) {
+                "0" -> context.getString(R.string.expenditure_percentage)
+                "1" -> context.getString(R.string.income_percentage)
+                else -> context.getString(R.string.expenditure_percentage)
+            }
+        }
+        else -> ""
     }
 }

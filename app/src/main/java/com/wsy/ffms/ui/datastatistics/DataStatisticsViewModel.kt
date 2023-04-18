@@ -31,7 +31,8 @@ class DataStatisticsViewModel : BaseViewModel() {
     val incomeList = MutableLiveData<List<Income>>()  //收入列表
     val incomeAmount = MutableLiveData<String>()   //收入总额
 
-    val rankSize = MutableLiveData<String>()    //排行个数
+    val centerType = MutableLiveData<String>()  //饼状图中心位置文本
+    val centerTypeValue = MutableLiveData<String>()  //饼状图中心位置类型占比
 
     //获取支出列表
     fun queryAll() {
@@ -201,14 +202,14 @@ class DataStatisticsViewModel : BaseViewModel() {
     }
 
     //查询本月度支出收入排行
-    fun queryRankMonthly(): List<Pair<String, BarEntry>> {
+    fun queryRankMonthly(): List<Pair<String, Float>> {
         val currentDateYear =
             TimeUnit.parseDate(date.value!!, datePattern.value!!).get(Calendar.YEAR).toString()
         val currentDateMonth =
             (TimeUnit.parseDate(date.value!!, datePattern.value!!)
                 .get(Calendar.MONTH) + 1).toString()
 
-        val rankList: MutableList<Pair<String, BarEntry>> = mutableListOf()
+        val rankList: MutableList<Pair<String, Float>> = mutableListOf()
 
         val typeList =
             if (chartType.value == "0")
@@ -229,10 +230,10 @@ class DataStatisticsViewModel : BaseViewModel() {
                         )
                     else
                         AppDataBase.instance.getIncomeDao().queryAllByMonthAndType(
-                        currentDateYear,
-                        currentDateMonth,
-                        (type as IncomeType).typeName.toString()
-                    )
+                            currentDateYear,
+                            currentDateMonth,
+                            (type as IncomeType).typeName.toString()
+                        )
                 var amount = 0
                 amountList?.forEach { any ->
                     amount += if (chartType.value == "0") (any as Expenditure).amount?.toInt()!!
@@ -246,10 +247,63 @@ class DataStatisticsViewModel : BaseViewModel() {
                 )
             }
         }
-        rankSize.value = list.size.toString()
-        list.sortBy { pair -> pair.second }
-        list.forEachIndexed { index, pair ->
-            rankList.add(Pair(pair.first, BarEntry(index.toFloat(), pair.second.toFloat())))
+        list.sortByDescending { pair -> pair.second }
+        list.forEach { pair ->
+            rankList.add(Pair(pair.first, pair.second.toFloat()))
+        }
+        return rankList
+    }
+
+    //查询本年度支出收入排行
+    fun queryRankAnnual(): List<Pair<String, Float>> {
+        val currentDateYear =
+            TimeUnit.parseDate(date.value!!, datePattern.value!!).get(Calendar.YEAR).toString()
+
+        val rankList: MutableList<Pair<String, Float>> = mutableListOf()
+
+        val typeList =
+            if (chartType.value == "0")
+            //支出
+                AppDataBase.instance.getConsumptionTypeDao().queryAllConsumptionType()
+            else
+            //收入
+                AppDataBase.instance.getIncomeTypeDao().queryAllIncomeType()
+        val list: MutableList<Pair<String, Int>> = mutableListOf()
+        typeList?.let {
+            it.forEachIndexed { index, type ->
+                val amountList =
+                    if (chartType.value == "0")
+                        AppDataBase.instance.getExpenditureDao().queryAllByYearAndType(
+                            currentDateYear,
+                            (type as ConsumptionType).typeName.toString()
+                        )
+                    else
+                        AppDataBase.instance.getIncomeDao().queryAllByYearAndType(
+                            currentDateYear,
+                            (type as IncomeType).typeName.toString()
+                        )
+                var amount = 0
+                amountList?.forEach { any ->
+                    amount += if (chartType.value == "0") (any as Expenditure).amount?.toInt()!!
+                    else (any as Income).amount?.toInt()!!
+                }
+                if (amount != 0) {
+                    if (index > 5) {
+                        amount += list[5].second
+                        list.removeAt(5)
+                    }
+                    list.add(
+                        Pair(
+                            if (chartType.value == "0") (type as ConsumptionType).typeName!! else (type as IncomeType).typeName!!,
+                            amount
+                        )
+                    )
+                }
+            }
+        }
+        list.sortByDescending { pair -> pair.second }
+        list.forEach { pair ->
+            rankList.add(Pair(pair.first, pair.second.toFloat()))
         }
         return rankList
     }
