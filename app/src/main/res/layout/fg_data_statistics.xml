@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.text.TextUtils" />
+
         <variable
             name="title"
             type="com.wsy.ffms.model.bean.Title" />
@@ -299,6 +301,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/iv_select_type"
+                        visibleUnless='@{viewModel.type == "1"}'
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.centerType}"
@@ -312,6 +315,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/iv_select_type_percent"
+                        visibleUnless='@{viewModel.type == "1"}'
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.centerTypeValue}"
@@ -321,6 +325,90 @@
                         app:layout_constraintEnd_toEndOf="@+id/pc_rank"
                         app:layout_constraintStart_toStartOf="@+id/pc_rank"
                         app:layout_constraintTop_toBottomOf="@+id/iv_select_type" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_legend_red"
+                        visibleUnless='@{viewModel.type == "1"&amp;(!TextUtils.isEmpty(viewModel.rankListAnnual[0]))}'
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/shape_legend_red"
+                        android:drawablePadding="@dimen/dp_4"
+                        android:gravity="center"
+                        android:text='@{viewModel.rankListAnnual[0]}'
+                        android:textColor="@color/color_text"
+                        android:textSize="@dimen/text_size_12"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/pc_rank"
+                        app:layout_constraintTop_toTopOf="@+id/pc_rank"
+                        tools:text="购物" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_legend_blue"
+                        visibleUnless='@{viewModel.type == "1"&amp;(!TextUtils.isEmpty(viewModel.rankListAnnual[1]))}'
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawableStart="@drawable/shape_legend_blue"
+                        android:drawablePadding="@dimen/dp_4"
+                        android:gravity="center"
+                        android:text='@{viewModel.rankListAnnual[1]}'
+                        android:textColor="@color/color_text"
+                        android:textSize="@dimen/text_size_12"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/pc_rank"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_legend_red"
+                        tools:text="购物" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_legend_green"
+                        visibleUnless='@{viewModel.type == "1"&amp;(!TextUtils.isEmpty(viewModel.rankListAnnual[2]))}'
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawableStart="@drawable/shape_legend_green"
+                        android:drawablePadding="@dimen/dp_4"
+                        android:gravity="center"
+                        android:text='@{viewModel.rankListAnnual[2]}'
+                        android:textColor="@color/color_text"
+                        android:textSize="@dimen/text_size_12"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/pc_rank"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_legend_blue"
+                        tools:text="购物" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_legend_yellow"
+                        visibleUnless='@{viewModel.type == "1"&amp;(!TextUtils.isEmpty(viewModel.rankListAnnual[3]))}'
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawableStart="@drawable/shape_legend_yellow"
+                        android:drawablePadding="@dimen/dp_4"
+                        android:gravity="center"
+                        android:text='@{viewModel.rankListAnnual[3]}'
+                        android:textColor="@color/color_text"
+                        android:textSize="@dimen/text_size_12"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/pc_rank"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_legend_green"
+                        tools:text="购物" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_legend_grey"
+                        visibleUnless='@{viewModel.type == "1"&amp;(!TextUtils.isEmpty(viewModel.rankListAnnual[4]))}'
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:drawableStart="@drawable/shape_legend_grey"
+                        android:drawablePadding="@dimen/dp_4"
+                        android:gravity="center"
+                        android:text='@{viewModel.rankListAnnual[4]}'
+                        android:textColor="@color/color_text"
+                        android:textSize="@dimen/text_size_12"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/pc_rank"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_legend_yellow"
+                        tools:text="购物" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

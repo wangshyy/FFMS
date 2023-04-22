@@ -333,12 +333,13 @@ class DataStatisticsFragment :
     private fun showRankPieChart() {
         val list = mViewModel.queryRankAnnual()
         var allAmount = 0F  //总金额
+        //图例颜色列表
         val colorList = arrayListOf(
-            Color.parseColor("#FF3333"),
+            requireActivity().getColor(R.color.color_red_FF3333),
             requireActivity().getColor(R.color.colorPrimary),
-            Color.parseColor("#00CC66"),
-            Color.parseColor("#FFFF33"),
-            Color.parseColor("#A0A0A0")
+            requireActivity().getColor(R.color.color_green_00CC66),
+            requireActivity().getColor(R.color.color_yellow_FFFF33),
+            requireActivity().getColor(R.color.color_grey_A0A0A0)
         )
         val sliceValues = mutableListOf<SliceValue>()
         list.forEachIndexed { index, pair ->

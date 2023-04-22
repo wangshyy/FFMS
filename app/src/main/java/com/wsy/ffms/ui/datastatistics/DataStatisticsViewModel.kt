@@ -34,6 +34,8 @@ class DataStatisticsViewModel : BaseViewModel() {
     val centerType = MutableLiveData<String>()  //饼状图中心位置文本
     val centerTypeValue = MutableLiveData<String>()  //饼状图中心位置类型占比
 
+    val rankListAnnual = MutableLiveData<List<String?>>()  //年度收支排行列表
+
     //获取支出列表
     fun queryAll() {
         val calendar = TimeUnit.parseDate(date.value!!, datePattern.value!!)
@@ -301,10 +303,13 @@ class DataStatisticsViewModel : BaseViewModel() {
                 }
             }
         }
+        val rankListAnnual: MutableList<String> = mutableListOf()
         list.sortByDescending { pair -> pair.second }
         list.forEach { pair ->
             rankList.add(Pair(pair.first, pair.second.toFloat()))
+            rankListAnnual.add(if (pair.second == 0) "" else pair.first)
         }
+        this.rankListAnnual.value = rankListAnnual
         return rankList
     }
 }
