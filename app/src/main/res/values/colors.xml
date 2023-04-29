@@ -19,6 +19,8 @@
     <color name="color_grey_707070">#707070</color>
     <color name="color_grey_515151">#515151</color>
     <color name="color_divider">#66E4E4E9</color>
+    <color name="color_shade">#F3F5F8</color>
+
 
     <!-- 图例 -->
     <color name="color_red_FF3333">#FF3333</color>

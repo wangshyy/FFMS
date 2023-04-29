@@ -9,6 +9,7 @@ import com.wsy.ffms.databinding.FgMineBinding
 import com.wsy.ffms.db.AppDataBase
 import com.wsy.ffms.helper.UserHelper
 import com.wsy.ffms.ui.mine.basicfunction.modifypassword.ModifyPasswordActivity
+import com.wsy.ffms.ui.mine.systemcofig.BannerConfigActivity
 import com.wsy.ffms.ui.mine.systemcofig.SystemConfigCommonActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -47,6 +48,8 @@ class MineFragment : BaseVMFragment<FgMineBinding>(R.layout.fg_mine), View.OnCli
             R.id.tv_consumption_type -> startKtxActivity<SystemConfigCommonActivity>(value = ("pageType" to "2"))
             //收入类型
             R.id.tv_income_type -> startKtxActivity<SystemConfigCommonActivity>(value = ("pageType" to "3"))
+            //轮播图配置
+            R.id.tv_banner -> startKtxActivity<BannerConfigActivity>()
 
             //登出
             R.id.tv_logout -> {

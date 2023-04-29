@@ -1,6 +1,7 @@
 package com.wsy.ffms.core
 
 import com.wsy.ffms.ui.datastatistics.DataStatisticsViewModel
+import com.wsy.ffms.ui.home.HomeViewModel
 import com.wsy.ffms.ui.incomeexpenditure.IncomeExpenditureViewModel
 import com.wsy.ffms.ui.incomeexpenditure.add.AddIncomeExpenditureViewModel
 import com.wsy.ffms.ui.login.LoginViewModel
@@ -27,4 +28,5 @@ val viewModelModule = module {
     viewModel { AddIncomeExpenditureViewModel(androidContext()) }
     viewModel { IncomeExpenditureViewModel() }
     viewModel { DataStatisticsViewModel() }
+    viewModel { HomeViewModel() }
 }

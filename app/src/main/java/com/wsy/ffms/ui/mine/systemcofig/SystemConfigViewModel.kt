@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.wsy.ffms.core.base.BaseViewModel
 import com.wsy.ffms.db.AppDataBase
+import com.wsy.ffms.db.banner.Banner
 import com.wsy.ffms.db.consumptiontype.ConsumptionType
 import com.wsy.ffms.db.counttype.CountType
 import com.wsy.ffms.db.familymember.FamilyMember
@@ -43,9 +44,10 @@ class SystemConfigViewModel : BaseViewModel() {
                 }
                 //获取消费类型
                 "2" -> {
-                    (AppDataBase.instance.getConsumptionTypeDao().queryAllConsumptionType())?.forEach {
-                        typeList.add(SystemConfigCommonBean(it.id, it.typeName))
-                    }
+                    (AppDataBase.instance.getConsumptionTypeDao()
+                        .queryAllConsumptionType())?.forEach {
+                            typeList.add(SystemConfigCommonBean(it.id, it.typeName))
+                        }
                 }
                 //获取收入类型
                 "3" -> {
@@ -76,7 +78,8 @@ class SystemConfigViewModel : BaseViewModel() {
                 }
                 //插入到消费类型数据表获取
                 "2" -> {
-                    AppDataBase.instance.getConsumptionTypeDao().insert(ConsumptionType(null, type.value))
+                    AppDataBase.instance.getConsumptionTypeDao()
+                        .insert(ConsumptionType(null, type.value))
                     emitUiState(addSuccess = true)
                 }
                 //插入到收入类型数据表获取
@@ -117,16 +120,50 @@ class SystemConfigViewModel : BaseViewModel() {
         }
     }
 
+    //获取轮播图列表
+    fun getBannerList() {
+        emitUiState(showProgress = true)
+        launchOnUI {
+            val bannerList = AppDataBase.instance.getBannerDao().queryAllBanner()
+            emitUiState(showBannerList = bannerList)
+        }
+    }
+
+    //添加轮播图
+    fun insertBanner(uri: String) {
+        emitUiState(showProgress = true)
+        launchOnUI {
+            AppDataBase.instance.getBannerDao().insert(Banner(null, uri))
+            emitUiState(addSuccess = true)
+        }
+    }
+
+    //删除轮播图
+    fun deleteBanner(id: Int) {
+        emitUiState(showProgress = true)
+        launchOnUI {
+            AppDataBase.instance.getBannerDao().delete(Banner(id))
+            emitUiState(deleteSuccess = true)
+        }
+    }
 
     private fun emitUiState(
         showProgress: Boolean = false,
         showError: String? = null,
         addSuccess: Boolean = false,
         deleteSuccess: Boolean = false,
-        showSuccess: List<SystemConfigCommonBean>? = null
+        showSuccess: List<SystemConfigCommonBean>? = null,
+        showBannerList: List<Banner>? = null
     ) {
         val uiState =
-            SystemConfigUiModel(showProgress, showError, addSuccess, deleteSuccess, showSuccess)
+            SystemConfigUiModel(
+                showProgress,
+                showError,
+                addSuccess,
+                deleteSuccess,
+                showSuccess,
+                showBannerList
+            )
         _uiState.value = uiState
     }
 
@@ -135,6 +172,7 @@ class SystemConfigViewModel : BaseViewModel() {
         val showError: String?,
         val addSuccess: Boolean,
         val deleteSuccess: Boolean,
-        val showSuccess: List<SystemConfigCommonBean>?
+        val showSuccess: List<SystemConfigCommonBean>?,
+        val showBannerList: List<Banner>?
     )
 }

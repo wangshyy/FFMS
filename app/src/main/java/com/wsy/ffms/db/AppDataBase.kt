@@ -4,6 +4,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.wsy.ffms.MyApplication
+import com.wsy.ffms.db.banner.Banner
+import com.wsy.ffms.db.banner.BannerDao
 import com.wsy.ffms.db.consumptiontype.ConsumptionType
 import com.wsy.ffms.db.consumptiontype.ConsumptionTypeDao
 import com.wsy.ffms.db.counttype.CountType
@@ -25,8 +27,8 @@ import com.wsy.ffms.db.user.UserDao
  *  desc   :
  */
 @Database(
-    entities = [User::class, CountType::class, ConsumptionType::class, IncomeType::class, FamilyMember::class, Income::class, Expenditure::class],
-    version = 6,
+    entities = [User::class, CountType::class, ConsumptionType::class, IncomeType::class, FamilyMember::class, Income::class, Expenditure::class, Banner::class],
+    version = 7,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {
@@ -47,4 +49,5 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun getFamilyMemberDao(): FamilyMemberDao
     abstract fun getIncomeDao(): IncomeDao
     abstract fun getExpenditureDao(): ExpenditureDao
+    abstract fun getBannerDao(): BannerDao
 }

@@ -201,7 +201,31 @@
                 android:text="@string/income_type"
                 android:textColor="@color/color_text"
                 android:textSize="@dimen/text_size_14"
-                app:layout_constraintTop_toBottomOf="@+id/line_consumption_type" />
+                app:layout_constraintTop_toBottomOf="@+id/line_consumption_type"
+                tools:layout_editor_absoluteX="12dp" />
+
+            <View
+                android:id="@+id/line_banner"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_activity_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_income_type" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_52"
+                android:drawableStart="@drawable/icon_banner"
+                android:drawableEnd="@drawable/icon_arrow_right"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:onClick="@{onClickListener}"
+                android:text="@string/banner"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_14"
+                app:layout_constraintTop_toBottomOf="@+id/line_banner" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView

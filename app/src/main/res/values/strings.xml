@@ -51,6 +51,7 @@
     <string name="consumption_type">消费类型</string>
     <string name="income_type">收入类型</string>
     <string name="family_member">家庭成员</string>
+    <string name="banner">轮播图配置</string>
     <string name="add">+ 添加</string>
     <string name="system_config_common_type_hint">请输入类型</string>
     <string name="input_hint">请输入</string>
@@ -85,4 +86,7 @@
     <string name="income_percentage">收入占比</string>
     <string name="expenditure_percentage">支出占比</string>
     <string name="rmb">元</string>
+    <string name="budget_monthly">本月预算</string>
+    <string name="remaining_budget">剩余预算：</string>
+    <string name="budget">总预算：</string>
 </resources>

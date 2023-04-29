@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:sml="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.wsy.ffms.db.banner.Banner" />
+    </data>
+
+    <com.tubb.smrv.SwipeHorizontalMenuLayout
+        android:id="@+id/sml"
+        style="@style/CommonWrapViewStyle"
+        android:layout_marginHorizontal="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/shape_box_bg"
+        sml:sml_auto_open_percent="0.2"
+        sml:sml_scroller_duration="250"
+        sml:sml_scroller_interpolator="@android:anim/bounce_interpolator">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@id/smContentView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_180"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@id/smMenuViewRight"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="@dimen/dp_36"
+                android:layout_height="@dimen/dp_36"
+                android:src="@drawable/ic_item_delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.tubb.smrv.SwipeHorizontalMenuLayout>
+</layout>

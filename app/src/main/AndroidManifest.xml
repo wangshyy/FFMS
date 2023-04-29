@@ -53,6 +53,10 @@
             android:name="com.wsy.ffms.ui.incomeexpenditure.add.AddIncomeExpenditureActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wsy.ffms.ui.mine.systemcofig.BannerConfigActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
