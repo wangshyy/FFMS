@@ -89,4 +89,5 @@
     <string name="budget_monthly">本月预算</string>
     <string name="remaining_budget">剩余预算：</string>
     <string name="budget">总预算：</string>
+    <string name="budget_setting">预算设置</string>
 </resources>

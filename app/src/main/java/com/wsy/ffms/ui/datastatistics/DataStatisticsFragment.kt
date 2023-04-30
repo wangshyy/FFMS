@@ -388,7 +388,7 @@ class DataStatisticsFragment :
                 val popup: TimePickerPopup = TimePickerPopup(requireContext())
                     .setMode(if (binding.isMonthly) TimePickerPopup.Mode.YM else TimePickerPopup.Mode.Y)
                     .setDefaultDate(date)
-                    .setDateRang(null, date)
+                    .setDateRange(null, date)
                     .setTimePickerListener(object : TimePickerListener {
                         override fun onTimeChanged(date: Date) {
                             //时间改变
@@ -397,6 +397,9 @@ class DataStatisticsFragment :
                         override fun onTimeConfirm(date: Date, view: View) {
                             //点击确认时间
                             mViewModel.date.value = format.format(date)
+                        }
+
+                        override fun onCancel() {
                         }
                     })
                 XPopup.Builder(requireContext())

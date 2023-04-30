@@ -106,7 +106,7 @@ class AddIncomeExpenditureActivity : BaseVMActivity(), View.OnClickListener {
                 val popup: TimePickerPopup = TimePickerPopup(this)
                     .setMode(TimePickerPopup.Mode.YMD)
                     .setDefaultDate(date)
-                    .setDateRang(null, date)
+                    .setDateRange(null, date)
                     .setTimePickerListener(object : TimePickerListener {
                         override fun onTimeChanged(date: Date) {
                             //时间改变
@@ -115,6 +115,10 @@ class AddIncomeExpenditureActivity : BaseVMActivity(), View.OnClickListener {
                         override fun onTimeConfirm(date: Date, view: View) {
                             //点击确认时间
                             mViewModel.date.value = format.format(date)
+                        }
+
+                        override fun onCancel() {
+
                         }
                     })
                 XPopup.Builder(this)

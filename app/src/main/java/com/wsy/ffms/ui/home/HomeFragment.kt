@@ -1,12 +1,15 @@
 package com.wsy.ffms.ui.home
 
 import android.view.View
+import androidx.appcompat.widget.AppCompatTextView
 import com.bumptech.glide.Glide
+import com.lxj.xpopup.XPopup
 import com.wsy.ffms.R
 import com.wsy.ffms.core.base.BaseVMFragment
-import com.wsy.ffms.core.etx.toast
 import com.wsy.ffms.databinding.FgHomeBinding
+import com.wsy.ffms.db.AppDataBase
 import com.wsy.ffms.db.banner.Banner
+import com.wsy.ffms.db.budget.Budget
 import com.wsy.ffms.model.bean.Title
 import com.wsy.ffms.ui.MainActivity
 import com.wsy.ffms.widget.LoadingProgressDialog
@@ -14,6 +17,7 @@ import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 /**
  *  author : wsy
@@ -51,8 +55,9 @@ class HomeFragment : BaseVMFragment<FgHomeBinding>(R.layout.fg_home), View.OnCli
 
     override fun initData() {
         mViewModel.getBannerList()
-
-        mViewModel.budgetPercent.value = "80"
+        mViewModel.intBudgetList()
+        mViewModel.getBudgetAmount()
+        mViewModel.getExpenditureAmount()
     }
 
     override fun startObserve() {
@@ -78,11 +83,57 @@ class HomeFragment : BaseVMFragment<FgHomeBinding>(R.layout.fg_home), View.OnCli
                 }
             }
         }
+
+        //观察获取结果,都获取完成时
+        mViewModel.getResult.observe(this) {
+            if (it.first && it.second) {
+                if (!mViewModel.budget.value.isNullOrEmpty()) {
+                    mViewModel.remainingBudget.value =
+                        (mViewModel.budget.value?.toInt()
+                            ?.minus(mViewModel.expenditure.value?.toInt()!!)).toString()
+                    mViewModel.budgetPercent.value =
+                        ((mViewModel.budget.value!!.toInt() - mViewModel.expenditure.value!!.toInt()).toFloat() / mViewModel.budget.value!!.toFloat() * 100).toInt()
+                            .toString()
+                } else {
+                    mViewModel.budgetPercent.value = "0"
+                }
+                //重置
+                mViewModel.getResult.value = Pair(first = false, second = false)
+            }
+        }
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-
+            R.id.tv_plan_title -> {
+                val view = XPopup.Builder(context)
+                    .isViewMode(true)
+                    .popupHeight(getPeekHeight())
+                    .isDestroyOnDismiss(true) //对于只使用一次的弹窗，推荐设置这个
+                    .asBottomList(
+                        getString(R.string.budget_setting),
+                        mViewModel.budgetList.toTypedArray(),
+                        null,
+                        2,
+                        true,
+                        { position, text ->
+                            mViewModel.budget.value?.let {
+                                AppDataBase.instance.getBudgetDao().update(Budget(0, text))
+                            } ?: let {
+                                AppDataBase.instance.getBudgetDao().insert(Budget(null, text))
+                            }
+                        },
+                        R.layout.dialog_budget_setting,
+                        0
+                    )
+                view.show()
+            }
         }
+    }
+
+    //弹窗高度
+    private fun getPeekHeight(): Int {
+        val peekHeight = resources.displayMetrics.heightPixels
+        return peekHeight - peekHeight * 3 / 5
     }
 }
