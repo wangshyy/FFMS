@@ -78,7 +78,16 @@ class HomeFragment : BaseVMFragment<FgHomeBinding>(R.layout.fg_home), View.OnCli
         mViewModel.budgetPercent.observe(this) {
             it?.let {
                 binding.customViewBudget.apply {
-                    endPercent = it.toInt()
+                    if (mViewModel.isExcess.value == true) {
+                        paintColor = context.getColor(R.color.color_red_FF3333)
+                        endPercent = 100
+                        percent = 0
+                    } else {
+                        paintColor = context.getColor(R.color.colorPrimary)
+                        endPercent = it.toInt()
+                        percent = 0
+                    }
+
                     invalidate()
                 }
             }
@@ -88,12 +97,21 @@ class HomeFragment : BaseVMFragment<FgHomeBinding>(R.layout.fg_home), View.OnCli
         mViewModel.getResult.observe(this) {
             if (it.first && it.second) {
                 if (!mViewModel.budget.value.isNullOrEmpty()) {
-                    mViewModel.remainingBudget.value =
-                        (mViewModel.budget.value?.toInt()
-                            ?.minus(mViewModel.expenditure.value?.toInt()!!)).toString()
-                    mViewModel.budgetPercent.value =
-                        ((mViewModel.budget.value!!.toInt() - mViewModel.expenditure.value!!.toInt()).toFloat() / mViewModel.budget.value!!.toFloat() * 100).toInt()
-                            .toString()
+                    if (mViewModel.budget.value?.toInt()!! < mViewModel.expenditure.value?.toInt()!!) {
+                        mViewModel.isExcess.value = true
+                        mViewModel.remainingBudget.value = "0"
+                        mViewModel.budgetPercent.value =
+                            ((mViewModel.expenditure.value!!.toInt() - mViewModel.budget.value!!.toInt()).toFloat() / mViewModel.budget.value!!.toFloat() * 100).toInt()
+                                .toString()
+                    } else {
+                        mViewModel.isExcess.value = false
+                        mViewModel.remainingBudget.value =
+                            (mViewModel.budget.value?.toInt()
+                                ?.minus(mViewModel.expenditure.value?.toInt()!!)).toString()
+                        mViewModel.budgetPercent.value =
+                            ((mViewModel.budget.value!!.toInt() - mViewModel.expenditure.value!!.toInt()).toFloat() / mViewModel.budget.value!!.toFloat() * 100).toInt()
+                                .toString()
+                    }
                 } else {
                     mViewModel.budgetPercent.value = "0"
                 }
@@ -106,6 +124,7 @@ class HomeFragment : BaseVMFragment<FgHomeBinding>(R.layout.fg_home), View.OnCli
     override fun onClick(v: View) {
         when (v.id) {
             R.id.tv_plan_title -> {
+                var checkPosition = mViewModel.budget.value?.let { it.toInt().div(500) - 1 }?:let { 0 }
                 val view = XPopup.Builder(context)
                     .isViewMode(true)
                     .popupHeight(getPeekHeight())
@@ -114,14 +133,16 @@ class HomeFragment : BaseVMFragment<FgHomeBinding>(R.layout.fg_home), View.OnCli
                         getString(R.string.budget_setting),
                         mViewModel.budgetList.toTypedArray(),
                         null,
-                        2,
+                        checkPosition,
                         true,
                         { position, text ->
                             mViewModel.budget.value?.let {
-                                AppDataBase.instance.getBudgetDao().update(Budget(0, text))
+                                AppDataBase.instance.getBudgetDao().update(Budget(1, text))
                             } ?: let {
                                 AppDataBase.instance.getBudgetDao().insert(Budget(null, text))
                             }
+                            mViewModel.getBudgetAmount()
+                            mViewModel.getExpenditureAmount()
                         },
                         R.layout.dialog_budget_setting,
                         0

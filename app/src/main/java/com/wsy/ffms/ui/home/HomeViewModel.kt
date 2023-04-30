@@ -27,6 +27,8 @@ class HomeViewModel : BaseViewModel() {
 
     val getResult = MutableLiveData(Pair(first = false, second = false))    // 预算，支出获取结果
 
+    val isExcess  = MutableLiveData<Boolean>(false) // 是否超额
+
 
     //获取轮播图列表
     fun getBannerList() {

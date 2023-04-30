@@ -56,3 +56,8 @@ fun AppCompatTextView.initTextByHorBarChartType(type: String?, lineChartType: St
         else -> ""
     }
 }
+
+@BindingAdapter("isExcess", "percent")
+fun AppCompatTextView.initTextByIsExcess(isExcess: Boolean, percent: String?) {
+    text = if (!isExcess) "剩余：$percent%" else "超额：$percent%"
+}

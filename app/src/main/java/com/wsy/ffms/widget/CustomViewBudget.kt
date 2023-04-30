@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.animation.doOnEnd
 import com.wsy.ffms.R
 
 class CustomViewBudget(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
@@ -15,7 +16,7 @@ class CustomViewBudget(context: Context, attrs: AttributeSet?, defStyleAttr: Int
     private val paintWidth: Float
         get() = width.toFloat() / 8
     var endPercent: Int = 0
-    private var percent: Int = 0
+    var percent: Int = 0
         set(value) {
             field = value
             invalidate()
@@ -67,7 +68,7 @@ class CustomViewBudget(context: Context, attrs: AttributeSet?, defStyleAttr: Int
         //画弧线
         val arcPain = Paint()
         arcPain.apply {
-            color = if (endPercent < 20) paintColorAlert else paintColor //弧线画笔颜色
+            color = paintColor //弧线画笔颜色
             style = Paint.Style.STROKE //弧线画笔样式，stroke:填充
             strokeWidth = paintWidth    //画笔宽度
             isAntiAlias = true    //抗锯齿
