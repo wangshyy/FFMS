@@ -20,6 +20,8 @@ import com.wsy.ffms.db.income.Income
 import com.wsy.ffms.db.income.IncomeDao
 import com.wsy.ffms.db.incometype.IncomeType
 import com.wsy.ffms.db.incometype.IncomeTypeDao
+import com.wsy.ffms.db.todo.Todo
+import com.wsy.ffms.db.todo.TodoDao
 import com.wsy.ffms.db.user.User
 import com.wsy.ffms.db.user.UserDao
 
@@ -29,8 +31,8 @@ import com.wsy.ffms.db.user.UserDao
  *  desc   :
  */
 @Database(
-    entities = [User::class, CountType::class, ConsumptionType::class, IncomeType::class, FamilyMember::class, Income::class, Expenditure::class, Banner::class, Budget::class],
-    version = 8,
+    entities = [User::class, CountType::class, ConsumptionType::class, IncomeType::class, FamilyMember::class, Income::class, Expenditure::class, Banner::class, Budget::class, Todo::class],
+    version = 10,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {
@@ -53,4 +55,5 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun getExpenditureDao(): ExpenditureDao
     abstract fun getBannerDao(): BannerDao
     abstract fun getBudgetDao(): BudgetDao
+    abstract fun getTodoDao(): TodoDao
 }

@@ -28,6 +28,7 @@ class AddIncomeExpenditureViewModel(val context: Context) : BaseViewModel() {
     val date = MutableLiveData<String>()    //日期
     val eIType = MutableLiveData<String>()  // 消费/收入类型
     val familyMember = MutableLiveData<String>() //家庭成员
+    val countType = MutableLiveData<String>() //账户类型
 
     //获取类型列表
     fun getTypeList() {
@@ -62,13 +63,22 @@ class AddIncomeExpenditureViewModel(val context: Context) : BaseViewModel() {
         emitUiState(showSuccess = list, isFamilyMember = true)
     }
 
+    //获取账户类型
+    fun getCountTypeList() {
+        val list = mutableListOf<SystemConfigCommonBean>()
+        (AppDataBase.instance.getCountTypeDao().queryAllCountType())?.forEach {
+            list.add(SystemConfigCommonBean(it.id, it.typeName))
+        }
+        emitUiState(showSuccess = list, isCountType = true)
+    }
+
     //新增收入/支出数据
     fun add() {
         if (date.value.isNullOrEmpty() || amount.value.isNullOrEmpty() || typeLabel.value.isNullOrEmpty()) {
             emitUiState(showError = context.getString(R.string.add_hint))
             return
         }
-        if(type.value == "1" && familyMember.value.isNullOrEmpty()){
+        if (type.value == "1" && familyMember.value.isNullOrEmpty()) {
             emitUiState(showError = context.getString(R.string.add_hint))
             return
         }
@@ -82,6 +92,7 @@ class AddIncomeExpenditureViewModel(val context: Context) : BaseViewModel() {
                 expenditure.dateMonth = (calendar.get(Calendar.MONTH) + 1).toString()
                 expenditure.dateDay = calendar.get(Calendar.DAY_OF_MONTH).toString()
                 expenditure.amount = amount.value
+                expenditure.countType = countType.value
                 expenditure.expenditureType = eIType.value
                 AppDataBase.instance.getExpenditureDao().insert(expenditure)
                 emitUiState(addSuccess = "expenditure")
@@ -96,6 +107,7 @@ class AddIncomeExpenditureViewModel(val context: Context) : BaseViewModel() {
                 income.dateMonth = (calendar.get(Calendar.MONTH) + 1).toString()
                 income.dateDay = calendar.get(Calendar.DAY_OF_MONTH).toString()
                 income.amount = amount.value
+                income.countType = countType.value
                 income.familyMember = familyMember.value
                 income.incomeType = eIType.value
                 AppDataBase.instance.getIncomeDao().insert(income)
@@ -109,6 +121,7 @@ class AddIncomeExpenditureViewModel(val context: Context) : BaseViewModel() {
         showError: String? = null,
         showSuccess: List<SystemConfigCommonBean>? = null,
         isFamilyMember: Boolean = false,
+        isCountType: Boolean = false,
         addSuccess: String? = null,
     ) {
         val uiState = AddIEUiModel(
@@ -116,6 +129,7 @@ class AddIncomeExpenditureViewModel(val context: Context) : BaseViewModel() {
             showError,
             showSuccess,
             isFamilyMember,
+            isCountType,
             addSuccess,
         )
         _uiState.value = uiState
@@ -126,6 +140,7 @@ class AddIncomeExpenditureViewModel(val context: Context) : BaseViewModel() {
         val showError: String?,
         val showSuccess: List<SystemConfigCommonBean>?,
         val isFamilyMember: Boolean,
+        val isCountType: Boolean,
         val addSuccess: String?,
     )
 }

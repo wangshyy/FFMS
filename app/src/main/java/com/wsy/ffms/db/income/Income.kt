@@ -15,6 +15,7 @@ data class Income(
     @ColumnInfo(name = "date_year") var dateYear: String? = null,
     @ColumnInfo(name = "date_month") var dateMonth: String? = null,
     @ColumnInfo(name = "date_day") var dateDay: String? = null,
+    @ColumnInfo(name = "count_type") var countType: String? = null,
     @ColumnInfo(name = "income_type") var incomeType: String? = null,
     @ColumnInfo(name = "family_member") var familyMember: String? = null,
     var amount: String? = null

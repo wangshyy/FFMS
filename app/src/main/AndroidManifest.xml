@@ -57,6 +57,10 @@
             android:name="com.wsy.ffms.ui.mine.systemcofig.BannerConfigActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.wsy.ffms.ui.home.AddTodoActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

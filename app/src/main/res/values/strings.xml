@@ -86,8 +86,20 @@
     <string name="income_percentage">收入占比</string>
     <string name="expenditure_percentage">支出占比</string>
     <string name="rmb">元</string>
+
+    <!-- 首页 -->
     <string name="budget_monthly">本月预算</string>
     <string name="remaining_budget">剩余预算：</string>
     <string name="budget">总预算：</string>
     <string name="budget_setting">预算设置</string>
+    <string name="todo">待办事项</string>
+    <string name="today">今天</string>
+    <string name="tomorrow">明天</string>
+    <string name="late">已逾期</string>
+    <string name="add_todo">新增待办事项</string>
+    <string name="todo_title">事项名称</string>
+    <string name="todo_title_hint">请输入事项名称</string>
+    <string name="todo_content_title">事项内容</string>
+    <string name="todo_content_title_hint">请输入事项内容</string>
+    <string name="confirm_todo_rem">确认完成事项？</string>
 </resources>

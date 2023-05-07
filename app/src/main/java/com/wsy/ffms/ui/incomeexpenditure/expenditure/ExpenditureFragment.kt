@@ -7,6 +7,7 @@ import com.jeremyliao.liveeventbus.LiveEventBus
 import com.wsy.ffms.R
 import com.wsy.ffms.adapter.ExpenditureAdapter
 import com.wsy.ffms.core.base.BaseVMFragment
+import com.wsy.ffms.core.etx.toast
 import com.wsy.ffms.databinding.FgExpenditureBinding
 import com.wsy.ffms.ui.incomeexpenditure.IncomeExpenditureViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,6 +44,13 @@ class ExpenditureFragment :BaseVMFragment<FgExpenditureBinding>(R.layout.fg_expe
                     "expenditure" -> mViewModel.getExpenditureList()
                 }
             }
+
+        mExpenditureListAdapter.deleteId.observe(this) {
+            it?.let {
+                mViewModel.deleteExpenditure(it)
+                mExpenditureListAdapter.clearDeleteId()
+            }
+        }
     }
 
     override fun initData() {
@@ -55,6 +63,10 @@ class ExpenditureFragment :BaseVMFragment<FgExpenditureBinding>(R.layout.fg_expe
                 mExpenditureListAdapter.setList(list)
             }
             if (it.showExpenditureList?.size ?: 0 == 0) mExpenditureListAdapter.setEmptyView(mEmptyView)
+            if (it.deleteSuccess){
+                requireActivity().toast(getString(R.string.delete_success))
+                mViewModel.getExpenditureList()
+            }
         }
     }
 }

@@ -1,8 +1,10 @@
 package com.wsy.ffms.db.expenditure
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.wsy.ffms.db.income.Income
 import java.time.Month
 
 /**
@@ -15,6 +17,10 @@ interface ExpenditureDao {
     //新增支出
     @Insert
     fun insert(expenditure: Expenditure)
+
+    //删除
+    @Delete
+    fun delete(vararg expenditure: Expenditure)
 
     //获取所有支出信息
     @Query("SELECT * FROM expenditure")

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="title"
+            type="com.wsy.ffms.model.bean.Title" />
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="viewModel"
+            type="com.wsy.ffms.ui.home.HomeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_activity_bg">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/layout_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_46"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@{title}" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/shape_box_bg"
+            android:paddingHorizontal="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_6"
+            android:paddingBottom="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_todo_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/todo_title"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_14"
+                app:layout_constraintBottom_toBottomOf="@+id/et_todo_title_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/et_todo_title_title" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_todo_title_title"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_42"
+                android:background="@null"
+                android:gravity="center|end"
+                android:hint="@string/todo_title_hint"
+                android:inputType="text"
+                android:text="@={viewModel.todoTitle}"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_todo_title"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view_line1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:background="@color/color_divider"
+                app:layout_constraintTop_toBottomOf="@+id/et_todo_title_title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_date_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/date"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_14"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_date" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_42"
+                android:drawableEnd="@drawable/icon_date"
+                android:drawablePadding="@dimen/dp_6"
+                android:gravity="center|end"
+                android:hint="@string/date_hint"
+                android:minWidth="@dimen/dp_100"
+                android:onClick="@{onClickListener}"
+                android:text="@{viewModel.todoDate}"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_line1" />
+
+            <View
+                android:id="@+id/view_line2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:background="@color/color_divider"
+                app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_content_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center"
+                android:text="@string/todo_content_title"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_14"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                app:cardBackgroundColor="#F7F7FC"
+                app:cardCornerRadius="@dimen/dp_6"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_content_title">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_todo_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="start|top"
+                    android:hint="@string/todo_content_title_hint"
+                    android:inputType="textMultiLine"
+                    android:minHeight="@dimen/dp_100"
+                    android:padding="@dimen/dp_10"
+                    android:text="@={viewModel.todoContent}"
+                    android:textColor="@color/color_text"
+                    android:textSize="@dimen/text_size_14" />
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_submit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/shape_box_bg"
+            android:gravity="center"
+            android:onClick="@{()->viewModel.addTodo()}"
+            android:text="@string/common_add"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_14"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

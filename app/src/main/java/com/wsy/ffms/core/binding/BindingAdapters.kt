@@ -1,9 +1,16 @@
 package com.wsy.ffms.core.binding
 
 import android.view.View
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import com.wsy.ffms.R
+import java.time.Duration
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.Period
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 /**
  *  author : wsy
@@ -60,4 +67,34 @@ fun AppCompatTextView.initTextByHorBarChartType(type: String?, lineChartType: St
 @BindingAdapter("isExcess", "percent")
 fun AppCompatTextView.initTextByIsExcess(isExcess: Boolean, percent: String?) {
     text = if (!isExcess) "剩余：$percent%" else "超额：$percent%"
+}
+
+@BindingAdapter("date")
+fun AppCompatImageView.initSrcByDate(date: String) {
+    val now = LocalDate.now()
+    val day = ChronoUnit.DAYS.between(
+        now,
+        LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    )
+    when  {
+        day < 0L -> setImageResource(R.drawable.shape_todo_item_bg_grey)
+        day == 0L -> setImageResource(R.drawable.shape_todo_item_bg_red)
+        day == 1L -> setBackgroundResource(R.drawable.shape_todo_item_bg_orange)
+        else -> setBackgroundResource(R.drawable.shape_todo_item_bg_normal)
+    }
+}
+
+@BindingAdapter("date")
+fun AppCompatTextView.initTextByDate(date: String) {
+    val now = LocalDate.now()
+    val day = ChronoUnit.DAYS.between(
+        now,
+        LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    )
+    text = when {
+        day < 0L -> context.getText(R.string.late)
+        day == 0L -> context.getText(R.string.today)
+        day == 1L -> context.getText(R.string.tomorrow)
+        else -> date
+    }
 }

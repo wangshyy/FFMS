@@ -1,8 +1,6 @@
 package com.wsy.ffms.ui.incomeexpenditure.add
 
-import android.graphics.Color
 import android.view.View
-import android.widget.TimePicker
 import com.gyf.immersionbar.ktx.immersionBar
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lxj.xpopup.XPopup
@@ -58,8 +56,11 @@ class AddIncomeExpenditureActivity : BaseVMActivity(), View.OnClickListener {
                     .asAttachList(
                         typeList.toTypedArray(), null
                     ) { _, label ->
-                        if (it.isFamilyMember) mViewModel.familyMember.value = label
-                        else mViewModel.eIType.value = label
+                        when {
+                            it.isFamilyMember -> mViewModel.familyMember.value = label
+                            it.isCountType -> mViewModel.countType.value = label
+                            else -> mViewModel.eIType.value = label
+                        }
                     }.show()
             }
             it.showError?.let { error ->

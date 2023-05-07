@@ -40,5 +40,4 @@ interface UserDao {
     //获取所有用户
     @Query("SELECT * FROM user")
     fun queryUserAll(): List<User?>?
-
 }

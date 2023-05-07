@@ -1,10 +1,14 @@
 package com.wsy.ffms.ui.home
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.wsy.ffms.R
 import com.wsy.ffms.core.base.BaseViewModel
 import com.wsy.ffms.db.AppDataBase
 import com.wsy.ffms.db.banner.Banner
+import com.wsy.ffms.db.income.Income
+import com.wsy.ffms.db.todo.Todo
 import com.wsy.ffms.util.TimeUnit
 import java.util.*
 
@@ -13,7 +17,7 @@ import java.util.*
  *  date   : 2023/4/29
  *  desc   : 首页viewModel
  */
-class HomeViewModel : BaseViewModel() {
+class HomeViewModel(private val context: Context) : BaseViewModel() {
     private var _uiState = MutableLiveData<HomeUiModel>()
     val uiState: LiveData<HomeUiModel>
         get() = _uiState
@@ -27,8 +31,12 @@ class HomeViewModel : BaseViewModel() {
 
     val getResult = MutableLiveData(Pair(first = false, second = false))    // 预算，支出获取结果
 
-    val isExcess  = MutableLiveData<Boolean>(false) // 是否超额
+    val isExcess = MutableLiveData<Boolean>(false) // 是否超额
 
+    val todoNum = MutableLiveData<Int>() //  待办事项数量
+    val todoTitle = MutableLiveData<String>() //  待办事项名称
+    val todoContent = MutableLiveData<String>() //  待办事项时间
+    val todoDate = MutableLiveData<String>() //  待办事项日期
 
     //获取轮播图列表
     fun getBannerList() {
@@ -50,7 +58,7 @@ class HomeViewModel : BaseViewModel() {
     fun getBudgetAmount() {
         launchOnUI {
             val budget = AppDataBase.instance.getBudgetDao().queryBudget()
-            if(budget?.isNotEmpty() == true){
+            if (budget?.isNotEmpty() == true) {
                 this@HomeViewModel.budget.value = budget[0].budgetValue
             }
         }
@@ -72,16 +80,57 @@ class HomeViewModel : BaseViewModel() {
         getResult.value = Pair(getResult.value?.first!!, true)
     }
 
+    //新增待办事项
+    fun addTodo() {
+        if (todoTitle.value.isNullOrEmpty() || todoDate.value.isNullOrEmpty() || todoContent.value.isNullOrEmpty()) {
+            emitUiState(showError = context.getString(R.string.add_hint))
+            return
+        }
+
+        launchOnUI {
+            val todo = Todo(null)
+            todo.apply {
+                title = todoTitle.value
+                date = todoDate.value
+                content = todoContent.value
+            }
+            AppDataBase.instance.getTodoDao().insert(todo)
+            emitUiState(addTodoSuccess = true)
+        }
+    }
+
+    //获取待办事项
+    fun getTodoList() {
+        launchOnUI {
+            val list = AppDataBase.instance.getTodoDao().queryAllTodo()
+            emitUiState(showTodoList = list)
+        }
+    }
+
+    //删除待办事项
+    fun deleteTodo(id: Int) {
+        launchOnUI {
+            AppDataBase.instance.getTodoDao().delete(Todo(id))
+            emitUiState(deleteSuccess = true)
+        }
+    }
+
     private fun emitUiState(
         showProgress: Boolean = false,
         showError: String? = null,
-        showBannerList: List<Banner>? = null
+        addTodoSuccess: Boolean = false,
+        showBannerList: List<Banner>? = null,
+        showTodoList: List<Todo>? = null,
+        deleteSuccess: Boolean = false
     ) {
         val uiState =
             HomeUiModel(
                 showProgress,
                 showError,
-                showBannerList
+                addTodoSuccess,
+                showBannerList,
+                showTodoList,
+                deleteSuccess
             )
         _uiState.value = uiState
     }
@@ -89,6 +138,9 @@ class HomeViewModel : BaseViewModel() {
     data class HomeUiModel(
         val showProgress: Boolean,
         val showError: String?,
-        val showBannerList: List<Banner>?
+        val addTodoSuccess: Boolean,
+        val showBannerList: List<Banner>?,
+        val showTodoList: List<Todo>?,
+        val deleteSuccess: Boolean
     )
 }

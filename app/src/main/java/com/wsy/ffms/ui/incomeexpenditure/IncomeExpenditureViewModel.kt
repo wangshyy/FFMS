@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.wsy.ffms.core.base.BaseViewModel
 import com.wsy.ffms.db.AppDataBase
+import com.wsy.ffms.db.banner.Banner
 import com.wsy.ffms.db.expenditure.Expenditure
 import com.wsy.ffms.db.income.Income
 
@@ -34,13 +35,30 @@ class IncomeExpenditureViewModel : BaseViewModel() {
         }
     }
 
+    //删除收入
+    fun deleteIncome(id: Int) {
+        launchOnUI {
+            AppDataBase.instance.getIncomeDao().delete(Income(id))
+            emitUiState(deleteSuccess = true)
+        }
+    }
+    //删除支出
+    fun deleteExpenditure(id: Int) {
+        launchOnUI {
+            AppDataBase.instance.getExpenditureDao().delete(Expenditure(id))
+            emitUiState(deleteSuccess = true)
+        }
+    }
+
     private fun emitUiState(
         showProcess: Boolean = false,
         showError: String? = null,
         showIncomeList: List<Income>? = null,
-        showExpenditureList: List<Expenditure>? = null
+        showExpenditureList: List<Expenditure>? = null,
+        deleteSuccess: Boolean = false,
     ) {
-        val uiState = IncomeExpenditureUiModel(showProcess, showError, showIncomeList,showExpenditureList)
+        val uiState =
+            IncomeExpenditureUiModel(showProcess, showError, showIncomeList, showExpenditureList,deleteSuccess)
         _uiState.value = uiState
     }
 
@@ -48,6 +66,7 @@ class IncomeExpenditureViewModel : BaseViewModel() {
         val showProcess: Boolean,
         val showError: String?,
         val showIncomeList: List<Income>?,
-        val showExpenditureList: List<Expenditure>?
+        val showExpenditureList: List<Expenditure>?,
+        val deleteSuccess: Boolean,
     )
 }

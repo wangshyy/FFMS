@@ -1,8 +1,10 @@
 package com.wsy.ffms.db.income
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.wsy.ffms.db.banner.Banner
 import com.wsy.ffms.db.expenditure.Expenditure
 
 /**
@@ -15,6 +17,10 @@ interface IncomeDao {
     //新增收入
     @Insert
     fun insert(income: Income)
+
+    //删除
+    @Delete
+    fun delete(vararg income: Income)
 
     //获取所有收入信息
     @Query("SELECT * FROM income")

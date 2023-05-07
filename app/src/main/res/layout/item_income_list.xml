@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:sml="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -10,56 +11,152 @@
             type="com.wsy.ffms.db.income.Income" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <com.tubb.smrv.SwipeHorizontalMenuLayout
+        android:id="@+id/sml"
+        style="@style/CommonWrapViewStyle"
         android:layout_marginHorizontal="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/shape_box_bg"
-        android:padding="@dimen/dp_10">
+        sml:sml_auto_open_percent="0.2"
+        sml:sml_scroller_duration="250"
+        sml:sml_scroller_interpolator="@android:anim/bounce_interpolator">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@id/smContentView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{model.familyMember}"
-            android:textColor="@color/color_text"
-            android:textSize="@dimen/text_size_16"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="张三" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text='@{model.dateYear+"-"+model.dateMonth+"-"+model.dateDay}'
-            android:textSize="@dimen/text_size_14"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_name"
-            tools:text="2023-03-25" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_income_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
-            android:text="@{model.incomeType}"
-            android:textSize="@dimen/text_size_14"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name"
-            tools:text="工资" />
+            android:background="@drawable/shape_box_bg"
+            android:padding="@dimen/dp_10">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:text='@{model.amount+"元"}'
-            android:textSize="@dimen/text_size_14"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_date"
-            tools:text="10000元" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{model.familyMember}"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_18"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="张三" />
+
+            <View
+                android:id="@+id/line_top"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_marginTop="@dimen/dp_4"
+                android:background="@color/color_activity_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text='@{model.dateYear+"-"+model.dateMonth+"-"+model.dateDay}'
+                android:textSize="@dimen/text_size_14"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/line_btm"
+                tools:text="2023-03-25" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_count_type_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/count_type"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_income_type" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_count_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@{model.countType}"
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintEnd_toEndOf="@+id/tv_date"
+                app:layout_constraintStart_toStartOf="@+id/tv_date"
+                app:layout_constraintTop_toBottomOf="@+id/tv_income_type"
+                tools:text="支付宝" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_income_type_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/income_type"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/line_top" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_income_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{model.incomeType}"
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_income_type_title"
+                app:layout_constraintEnd_toEndOf="@+id/tv_date"
+                app:layout_constraintStart_toStartOf="@+id/tv_date"
+                app:layout_constraintTop_toTopOf="@+id/tv_income_type_title"
+                tools:text="工资" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_amount_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="@string/amount"
+                android:textColor="@color/color_text"
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_count_type_title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{model.amount+"元"}'
+                android:textSize="@dimen/text_size_15"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_amount_title"
+                app:layout_constraintEnd_toEndOf="@+id/tv_date"
+                app:layout_constraintStart_toStartOf="@+id/tv_date"
+                app:layout_constraintTop_toTopOf="@+id/tv_amount_title"
+                tools:text="10000元" />
+
+            <View
+                android:id="@+id/line_btm"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@color/color_activity_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_amount" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@id/smMenuViewRight"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
+                android:src="@drawable/ic_item_delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.tubb.smrv.SwipeHorizontalMenuLayout>
 </layout>

@@ -8,6 +8,7 @@ import com.jeremyliao.liveeventbus.core.LiveEvent
 import com.wsy.ffms.R
 import com.wsy.ffms.adapter.IncomeListAdapter
 import com.wsy.ffms.core.base.BaseVMFragment
+import com.wsy.ffms.core.etx.toast
 import com.wsy.ffms.databinding.FgIncomeBinding
 import com.wsy.ffms.ui.incomeexpenditure.IncomeExpenditureViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -38,12 +39,19 @@ class IncomeFragment : BaseVMFragment<FgIncomeBinding>(R.layout.fg_income) {
 
         //订阅消息
         LiveEventBus.get<String>("add_type")
-            .observe(this){
-                when(it){
+            .observe(this) {
+                when (it) {
                     //添加成功，更新列表
                     "income" -> mViewModel.getIncomeList()
                 }
             }
+
+        mIncomeListAdapter.deleteId.observe(this) {
+            it?.let {
+                mViewModel.deleteIncome(it)
+                mIncomeListAdapter.clearDeleteId()
+            }
+        }
     }
 
     override fun initData() {
@@ -57,6 +65,10 @@ class IncomeFragment : BaseVMFragment<FgIncomeBinding>(R.layout.fg_income) {
                 mIncomeListAdapter.setList(list)
             }
             if (it.showIncomeList?.size ?: 0 == 0) mIncomeListAdapter.setEmptyView(mEmptyView)
+            if (it.deleteSuccess){
+                requireActivity().toast(getString(R.string.delete_success))
+                mViewModel.getIncomeList()
+            }
         }
     }
 }
