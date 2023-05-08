@@ -10,6 +10,12 @@ import com.wsy.ffms.db.banner.Banner
 import com.wsy.ffms.db.income.Income
 import com.wsy.ffms.db.todo.Todo
 import com.wsy.ffms.util.TimeUnit
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 /**
@@ -40,7 +46,6 @@ class HomeViewModel(private val context: Context) : BaseViewModel() {
 
     //获取轮播图列表
     fun getBannerList() {
-        emitUiState(showProgress = true)
         launchOnUI {
             val bannerList = AppDataBase.instance.getBannerDao().queryAllBanner()
             emitUiState(showBannerList = bannerList)
@@ -99,10 +104,21 @@ class HomeViewModel(private val context: Context) : BaseViewModel() {
         }
     }
 
-    //获取待办事项
+    // 获取待办事项
     fun getTodoList() {
         launchOnUI {
-            val list = AppDataBase.instance.getTodoDao().queryAllTodo()
+            val todoList = AppDataBase.instance.getTodoDao().queryAllTodo()
+            val list = mutableListOf<Todo>()
+            todoList?.forEach {
+                list.add(it)
+            }
+            // 根据日期前后升序
+            list.sortBy {
+                LocalDate.parse(
+                    it.date,
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                )
+            }
             emitUiState(showTodoList = list)
         }
     }

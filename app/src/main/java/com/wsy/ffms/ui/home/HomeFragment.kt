@@ -76,10 +76,8 @@ class HomeFragment : BaseVMFragment<FgHomeBinding>(R.layout.fg_home), View.OnCli
 
     override fun initData() {
         mViewModel.getBannerList()
-        mViewModel.intBudgetList()
         mViewModel.getBudgetAmount()
         mViewModel.getExpenditureAmount()
-        mViewModel.getTodoList()
 
         mAdapter.setEmptyView(mEmptyView)
     }
@@ -92,8 +90,9 @@ class HomeFragment : BaseVMFragment<FgHomeBinding>(R.layout.fg_home), View.OnCli
             }
 
             it.showBannerList?.let { list ->
-                progressDialog?.dismiss()
                 binding.bannerHome.setDatas(list)
+                mViewModel.intBudgetList()
+                mViewModel.getTodoList()
             }
 
             if (it.showProgress) {
@@ -187,7 +186,7 @@ class HomeFragment : BaseVMFragment<FgHomeBinding>(R.layout.fg_home), View.OnCli
                             mViewModel.getBudgetAmount()
                             mViewModel.getExpenditureAmount()
                         },
-                        R.layout.ac_add_todo,
+                        R.layout.dialog_budgrt_setting,
                         0
                     )
                 view.show()

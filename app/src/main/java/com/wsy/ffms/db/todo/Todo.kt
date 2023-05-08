@@ -3,6 +3,7 @@ package com.wsy.ffms.db.todo
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.time.LocalDate
 
 /**
  *  author : wsy
@@ -15,4 +16,12 @@ data class Todo(
     @ColumnInfo(name = "date") var date: String? = null,
     @ColumnInfo(name = "title") var title: String? = null,
     @ColumnInfo(name = "content") var content: String? = null,
+)
+
+
+data class LocalDateTodo(
+    val id: Int?,
+    var date: LocalDate? = null,
+    var title: String? = null,
+    var content: String? = null,
 )

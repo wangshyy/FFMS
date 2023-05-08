@@ -63,8 +63,7 @@
                     android:layout_height="@dimen/dp_160"
                     android:layout_margin="@dimen/dp_10"
                     app:banner_radius="@dimen/dp_6"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:layout_editor_absoluteX="11dp" />
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_budget"
