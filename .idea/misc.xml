@@ -11,6 +11,7 @@
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/drawable/icon_arrow_right.xml" value="0.30462962962962964" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/drawable/icon_confirm.xml" value="0.2574074074074074" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/drawable/selector_ds_month_or_year.xml" value="0.38229166666666664" />
+        <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/drawable/shape_box_bg.xml" value="0.3764102564102564" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/drawable/shape_ds_tab_indicator.xml" value="0.16979166666666667" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/drawable/shape_ds_type_indicator.xml" value="0.3764102564102564" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/drawable/shape_edit_text_bg.xml" value="0.38229166666666664" />
@@ -19,6 +20,7 @@
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/drawable/shape_legend_grey.xml" value="0.3074074074074074" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/drawable/shape_legend_yellow.xml" value="0.3074074074074074" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/drawable/shape_legent_red.xml" value="0.3074074074074074" />
+        <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/drawable/shape_seach_bg.xml" value="0.3764102564102564" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/drawable/shape_tab_indicator.xml" value="0.38229166666666664" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/drawable/shape_text_bg.xml" value="0.38229166666666664" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/drawable/shape_todo_item_bg_grey.xml" value="0.2574074074074074" />
@@ -31,6 +33,7 @@
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/ac_banner_config.xml" value="0.25" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/ac_login.xml" value="0.33" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/ac_main.xml" value="0.33" />
+        <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/ac_modify_password.xml" value="0.3605128205128205" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/ac_register.xml" value="0.33" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/ac_system_config_common.xml" value="0.25" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/dialog_add_todo.xml" value="0.25" />
@@ -40,12 +43,12 @@
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/fg_data_statistics.xml" value="0.18" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/fg_expenditure.xml" value="0.2046875" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/fg_home.xml" value="0.22" />
-        <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/fg_income.xml" value="0.2046875" />
+        <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/fg_income.xml" value="0.25" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/fg_income_expenditure.xml" value="0.25" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/fg_mine.xml" value="0.33" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/item_banner_list.xml" value="0.25" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/item_expenditure_list.xml" value="0.25" />
-        <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/item_income_list.xml" value="0.33" />
+        <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/item_income_list.xml" value="0.25" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/item_system_conig_common.xml" value="0.36614583333333334" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/item_todo_list.xml" value="0.22" />
         <entry key="..\:/Android_wsy/AndroidWorkSpaceSecond/FFMS/app/src/main/res/layout/layout_title.xml" value="0.36614583333333334" />

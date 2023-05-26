@@ -64,7 +64,6 @@ class HomeFragment : BaseVMFragment<FgHomeBinding>(R.layout.fg_home), View.OnCli
                 adapter = mAdapter
             }
         }
-
         //空页面
         mEmptyView =
             layoutInflater.inflate(
@@ -85,7 +84,7 @@ class HomeFragment : BaseVMFragment<FgHomeBinding>(R.layout.fg_home), View.OnCli
     override fun startObserve() {
         mViewModel.uiState.observe(this) {
             it.showTodoList?.let { list ->
-                mAdapter.setList(list)
+                mAdapter.setNewInstance(list.toMutableList())
                 mViewModel.todoNum.value = list.size
             }
 

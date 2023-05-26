@@ -1,6 +1,7 @@
 package com.wsy.ffms.ui.mine.basicfunction.modifypassword
 
 import android.view.View
+import com.gyf.immersionbar.ktx.immersionBar
 import com.wsy.ffms.R
 import com.wsy.ffms.core.base.BaseVMActivity
 import com.wsy.ffms.core.etx.toast
@@ -18,6 +19,11 @@ class ModifyPasswordActivity : BaseVMActivity(), View.OnClickListener {
     private val mModifyPasswordViewModel by viewModel<ModifyPasswordViewModel>()
     private var progressDialog: LoadingProgressDialog? = null
     override fun initView() {
+        immersionBar {
+            fitsSystemWindows(true)
+            statusBarColor(R.color.white)
+            statusBarDarkFont(true)
+        }
         binding.apply {
             onClickListener = this@ModifyPasswordActivity
             viewModel = mModifyPasswordViewModel

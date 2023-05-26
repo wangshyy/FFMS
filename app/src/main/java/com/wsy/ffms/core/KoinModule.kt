@@ -26,7 +26,7 @@ val viewModelModule = module {
     viewModel { ModifyPasswordViewModel() }
     viewModel { SystemConfigViewModel() }
     viewModel { AddIncomeExpenditureViewModel(androidContext()) }
-    viewModel { IncomeExpenditureViewModel() }
+    viewModel { IncomeExpenditureViewModel(androidContext()) }
     viewModel { DataStatisticsViewModel() }
     viewModel { HomeViewModel(androidContext()) }
 }

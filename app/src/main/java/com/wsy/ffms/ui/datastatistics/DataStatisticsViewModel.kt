@@ -290,13 +290,17 @@ class DataStatisticsViewModel : BaseViewModel() {
                     else (any as Income).amount?.toInt()!!
                 }
                 if (amount != 0) {
-                    if (index > 5) {
-                        amount += list[5].second
-                        list.removeAt(5)
+                    if (index > 4) {
+                        amount += list[4].second
+                        list.removeAt(4)
                     }
                     list.add(
                         Pair(
-                            if (chartType.value == "0") (type as ConsumptionType).typeName!! else (type as IncomeType).typeName!!,
+                            if (index < 4) {
+                                if (chartType.value == "0") (type as ConsumptionType).typeName!! else (type as IncomeType).typeName!!
+                            } else {
+                                "其它"
+                            },
                             amount
                         )
                     )
